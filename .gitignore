@@ -1,0 +1,5 @@
+outputs/*png
+outputs/*blendg
+assets/*blend1
+*/__pycache__
+*log
