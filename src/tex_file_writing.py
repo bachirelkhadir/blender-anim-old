@@ -110,7 +110,7 @@ def dvi_to_svg(dvi_file, regen_if_exists=False):
 
         # clean svg
         commands = [
-            "svgcleaner-bin/svgcleaner",
+            consts.SVG_CLEANER_BIN,
             "\"{}\"".format(result),
             "\"{}\"".format(result_cleaned),
             ">",
@@ -140,39 +140,25 @@ def tex_to_bpy(expression, tex_collection, template_tex_file_body=None):
     log.debug(f"{expression} -> collection {new_collection}")
     
     svg_collection = bpy.data.collections[new_collection]
-    svg_collection.name = "SVG " + expression
-
-    # parent all objects to empty
-    empty = bpy.data.objects.new(expression, None)
-    empty.empty_display_type = 'ARROWS'
+    #svg_collection.name = "SVG " + expression
 
 
-    for c in svg_collection.objects:
-        c.parent = empty
-        curve = c.data
-        curve.dimensions = '2D'
-        c.name = curve.name
+    # join all meshes into one object
+    # TODO: preserve material while joining
+    obs = svg_collection.objects
 
-    tex_collection.objects.link(empty)
-    
+    parent = obs[0]
+    bpy.ops.object.select_all(action='DESELECT')
+    bpy.context.view_layer.objects.active = parent
+    for c in obs:
+        c.select_set(state=True)
+    bpy.ops.object.join()
+    parent.scale *= 500
+    tex_collection.objects.link(parent)
 
-    # default scale for convenience
-    empty.scale *= 1000
-    utils.select_obj(empty)
-    bpy.ops.object.transform_apply(location=True, scale=True, rotation=True)
-    bpy.ops.object.origin_set(type='GEOMETRY_ORIGIN', center='BOUNDS')
-
-
-    # curve to mesh
-    for c in empty.children:
-        log.debug(f"Converting curve {c.name} to mesh")
-        utils.select_obj(c)
-        bpy.ops.object.convert(target='MESH', keep_original=False)
-        svg_collection.objects.unlink(c)
-        tex_collection.objects.link(c)
-
+    # remove unndeeded collection
     utils.remove_bpy_collection(svg_collection)
 
-    return empty
+    return parent
 
 

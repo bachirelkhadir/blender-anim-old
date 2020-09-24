@@ -22,7 +22,7 @@ class AnimationTimeline:
 
     def wait(self, duration):
         self._current_frame += self._duration_to_number_frames(duration)
-
+        return self._current_frame
 
     def play_animation(self, animation, duration):
         start = self._current_frame
@@ -31,7 +31,7 @@ class AnimationTimeline:
         animation.register_animation_on_blender_timeline(start, end)
         for ob in animation.auxilary_objects:
             self.anim_master_collection.objects.link(ob)
-
+        return end
 
     def _duration_to_number_frames(self, duration):
         return int(duration * self.fps)

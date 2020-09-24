@@ -26,75 +26,53 @@ from src.materials import *
 # End Imports
 
 
-scene = Scene(fps=15)
+scene = Scene(quality='LOW')
 
 sphere = bpy.data.objects["Sphere"]
 monkey = bpy.data.objects["Monkey"]
-#monkey2 = deep_copy_object(monkey)
 torus = bpy.data.objects["Torus"]
 cube = scene.add_cube(loc=(-5, 5, 0), scale=(3,3,3))
 color_bpy_object(cube, (.5, .1, 0.25, 1.))
 
-text = scene.add_text(r"Sample Scene")
-text.location = (3, 0, 1)
-
-
-render_info_msg = (f"Engine: {bpy.context.scene.render.engine} - "
-                   f"{consts.RESOLUTION}")
+render_info_msg = (r"\textcolor{blue}{Engine:}" "{scene.engine} - "
+                   r"\textcolor{red}{Resolution:}" f"{scene.resolution}")
 render_info_msg = scene.add_text(render_info_msg.replace("_", " "))
-render_info_msg.scale *= .5
-render_info_msg.location = (-3, -5, 0)
+render_info_msg.location = (-3, 5, 0)
+render_info_msg.scale *= 2
 
+scene.play(Appear(torus))
+scene.wait(2)
+# scene.play(Rotate(torus, (3, 2, 1)), duration=5)
+# scene.wait(1)
+# scene.play(Appear(render_info_msg))
+# scene.play(Translate(render_info_msg, (0, -2, 0)), duration=1)
+# scene.wait(3)
 
-scene.play(Rotate(cube, [0, .8*np.pi, -2*np.pi]), duration=2)
-scene.play(WrapInto(sphere, monkey))
-scene.play(Rotate(torus, [0, 0, np.pi]), duration=2)
-scene.wait(1)
-scene.play(Translate(cube, [10, 0, 0]), duration=2)
-# scene.play(Disappear(monkey))
-
-
+# scene.play(Appear(monkey))
+# scene.play(WrapInto(sphere, monkey), duration=2)
+# scene.wait(2)
+# scene.play(Appear(monkey))
+# scene.play(Translate(monkey, (0, 5, 0)), duration=2)
+# scene.wait(1)
+# scene.play(Translate(monkey, (5, 0, 0)), duration=2)
 
 
 log.info("Saving render blend file")
 save_blend_file("outputs/render.blend")
 
-
-
 logging.info("Rendering")
+scene.render()
 
-bpy.context.scene.render.resolution_x = RESOLUTION[0]
-bpy.context.scene.render.resolution_y = RESOLUTION[1]
+logging.info("Making video")
+scene.write_frames_to_video()
 
-# redirect output to log file
-logfile = 'blender_render.log'
-open(logfile, 'a').close()
-old = os.dup(1)
-sys.stdout.flush()
-os.close(1)
-os.open(logfile, os.O_WRONLY)
-
-
-idx = 0
-for frame_number in trange(0, 30, 1, desc="Rendering frame"):
-    log.debug(f"Rendering frame {frame_number}")
-    log.debug(f"Image size ({bpy.context.scene.render.resolution_x}, {bpy.context.scene.render.resolution_y})" )
-    bpy.context.scene.render.filepath = os.path.join(
-        consts.CURRENT_PATH,
-        f"outputs/render-frame{frame_number:02}.png"
-    )
-    bpy.context.scene.frame_set(frame_number)
-    bpy.ops.render.render(write_still=True)
-    idx += 1
-# disable output redirection
-os.close(1)
-os.dup(old)
-os.close(old)
+logging.info("Opening video")
+scene.open_video()
 
 
 # to view render:
 #  eog outputs/render.png 
 
 # Local Variables:
-# compile-command: "blender --background assets/monkey_sphere.blend --python scene_animation.py"
+# compile-command: "cd .. && blender --background assets/monkey_sphere.blend --python sample_scenes/hello_world.py"
 # End:

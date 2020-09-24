@@ -6,7 +6,7 @@ import src.basic_geometry as basic_geometry
 
 
 class Animation:
-    
+    # TODO: apply animation to group of objects
     def __init__(self):
         raise NotImplementedError
 
@@ -48,27 +48,9 @@ class Translate(BasicTransformation):
         super().__init__(source, shift, "location")
 
 
-
 class Scale(BasicTransformation):
     def __init__(self, source, scale):
         super().__init__(source, scale, "scale")
-
-    #     self.source = source
-    #     self.euler_rotation = Euler(euler_rotation)
-    #     self.auxilary_objects = []
-
-
-    # def register_animation_on_blender_timeline(self, start_frame, end_frame):
-    #     print(f"Rotating {self.source.name} between frames {start_frame} and {end_frame}")
-    #     bpy.context.scene.frame_set(start_frame)
-    #     self.source.keyframe_insert(data_path="rotation_euler", index=-1)
-
-    #     bpy.context.scene.frame_set(end_frame)
-    #     for i, ri in enumerate(self.euler_rotation):
-    #         self.source.rotation_euler[i] += ri
-    #     self.source.keyframe_insert(data_path="rotation_euler", index=-1)
-
-
 
 
 class Appear(Animation):

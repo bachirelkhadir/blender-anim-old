@@ -85,3 +85,5 @@ def save_blend_file(path):
         consts.CURRENT_PATH,
         path
     ))
+
+
