@@ -2,10 +2,11 @@ import os
 import hashlib
 from pathlib import Path
 import bpy
+import bmesh
 import logging
 log = logging.getLogger(__name__)
 import src.consts as consts
-
+import src.utils as utils
 
 
 def tex_hash(expression, template_tex_file_body):
@@ -122,11 +123,11 @@ def dvi_to_svg(dvi_file, regen_if_exists=False):
 
 
 
-def tex_to_bpy(expression, template_tex_file_body=None):
+def tex_to_bpy(expression, tex_collection, template_tex_file_body=None):
     """
     Converts a tex to blender object
     """
-
+    log.info(f"Tex -> Bpy ({expression})")
     if template_tex_file_body == None:
         template_tex_file_body = open(consts.TEMPLATE_TEX_FILE).read()
 
@@ -134,26 +135,44 @@ def tex_to_bpy(expression, template_tex_file_body=None):
     svg_filepath = tex_to_svg_file(expression, template_tex_file_body)
 
     # load svg into blender
-    # trick to find the objects created for the import:
-    collections_pre_import = set([ o.name for o in bpy.data.collections ])
-    bpy.ops.import_curve.svg(filepath=svg_filepath)
-    collections_post_import = set([ o.name for o in bpy.data.collections ])
-    new_collection = collections_post_import.difference(collections_pre_import).pop()
+    new_collection = utils.import_svg_in_blender_as_collection(svg_filepath)
 
     log.debug(f"{expression} -> collection {new_collection}")
     
     svg_collection = bpy.data.collections[new_collection]
-    svg_collection.name = expression
+    svg_collection.name = "SVG " + expression
 
     # parent all objects to empty
-    svg_parent = bpy.data.objects.new(expression, None)
-    for curve in svg_collection.objects:
-        curve.parent = svg_parent
-    svg_collection.objects.link(svg_parent)
+    empty = bpy.data.objects.new(expression, None)
+    empty.empty_display_type = 'ARROWS'
+
+
+    for c in svg_collection.objects:
+        c.parent = empty
+        curve = c.data
+        curve.dimensions = '2D'
+        c.name = curve.name
+
+    tex_collection.objects.link(empty)
+    
 
     # default scale for convenience
-    svg_parent.scale *= 1000
+    empty.scale *= 1000
+    utils.select_obj(empty)
+    bpy.ops.object.transform_apply(location=True, scale=True, rotation=True)
+    bpy.ops.object.origin_set(type='GEOMETRY_ORIGIN', center='BOUNDS')
 
-    return svg_parent
+
+    # curve to mesh
+    for c in empty.children:
+        log.debug(f"Converting curve {c.name} to mesh")
+        utils.select_obj(c)
+        bpy.ops.object.convert(target='MESH', keep_original=False)
+        svg_collection.objects.unlink(c)
+        tex_collection.objects.link(c)
+
+    utils.remove_bpy_collection(svg_collection)
+
+    return empty
 
 

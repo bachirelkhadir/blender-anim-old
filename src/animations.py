@@ -1,24 +1,111 @@
 import bpy
-from mathutils import Vector
+from mathutils import Vector, Euler
 import src.utils as utils
 from src.consts import *
+import src.basic_geometry as basic_geometry
 
 
-class WrapInto:
-    def __init__(self, source, target, start_frame=1, end_frame=30):
-        
+class Animation:
+    
+    def __init__(self):
+        raise NotImplementedError
+
+    def setup(self):
+        pass
+
+    def register_animation_on_blender_timeline(self, start_frame, end_frame):
+        raise NotImplementedError
+
+
+# Basic transformations: Translate, Rotate, Scale
+class BasicTransformation(Animation):
+    def __init__(self, source, delta, name_transformation='location'):
+        self.source = source
+        self.delta = delta
+        self.name_transformation = name_transformation
+        self.auxilary_objects = []
+
+
+    def register_animation_on_blender_timeline(self, start_frame, end_frame):
+        name_transformation = self.name_transformation
+        bpy.context.scene.frame_set(start_frame)
+        self.source.keyframe_insert(data_path=name_transformation, index=-1)
+
+        bpy.context.scene.frame_set(end_frame)
+        object_pose = getattr(self.source, name_transformation)
+        for i, delta_i in enumerate(self.delta):
+             object_pose[i] += delta_i
+        self.source.keyframe_insert(data_path=name_transformation, index=-1)
+
+
+class Rotate(BasicTransformation):
+    def __init__(self, source, euler_rotation):
+        super().__init__(source, euler_rotation, "rotation_euler")
+
+
+class Translate(BasicTransformation):
+    def __init__(self, source, shift):
+        super().__init__(source, shift, "location")
+
+
+
+class Scale(BasicTransformation):
+    def __init__(self, source, scale):
+        super().__init__(source, scale, "scale")
+
+    #     self.source = source
+    #     self.euler_rotation = Euler(euler_rotation)
+    #     self.auxilary_objects = []
+
+
+    # def register_animation_on_blender_timeline(self, start_frame, end_frame):
+    #     print(f"Rotating {self.source.name} between frames {start_frame} and {end_frame}")
+    #     bpy.context.scene.frame_set(start_frame)
+    #     self.source.keyframe_insert(data_path="rotation_euler", index=-1)
+
+    #     bpy.context.scene.frame_set(end_frame)
+    #     for i, ri in enumerate(self.euler_rotation):
+    #         self.source.rotation_euler[i] += ri
+    #     self.source.keyframe_insert(data_path="rotation_euler", index=-1)
+
+
+
+
+class Appear(Animation):
+    def __init__(self, source):
+        self.source = source
+        self.auxilary_objects = []
+
+    def register_animation_on_blender_timeline(self, start_frame, _):
+        self.source.hide_render = 0
+        self.source.keyframe_insert(data_path="hide_render", frame=start_frame)
+
+
+class Disappear(Animation):
+    def __init__(self, source):
+        self.source = source
+        self.auxilary_objects = []
+
+    def register_animation_on_blender_timeline(self, start_frame, _):
+        self.source.hide_render = 1
+        self.source.keyframe_insert(data_path="hide_render", frame=start_frame)
+
+
+class WrapInto(Animation):
+    def __init__(self, source, target):
+        self.source = source
+        self.target = target
+        self.auxilary_objects = []
+
+
+    def setup(self):
+        source = self.source
+        target = self.target
+
         target_name = target.name
-        target_copy = target.copy()
-        target_copy.data = target.data.copy()
-        target_copy.animation_data_clear()
-        if target_copy.data.shape_keys:
-           target_copy.data.shape_keys.animation_data_clear()
-        
+        target_copy = utils.deep_copy_object(target)
         target_copy.name = target_name + '-target'
         target_copy.location = source.location
-        bpy.context.collection.objects.link(target_copy)
-        target_copy.hide_render = True
-
 
         modifier = source.modifiers.new("Shrinkwrap", 'SHRINKWRAP')
         modifier.target = target_copy
@@ -28,51 +115,70 @@ class WrapInto:
         bpy.context.view_layer.objects.active = source
         bpy.ops.object.modifier_apply_as_shapekey(modifier=modifier.name, keep_modifier=False)
 
+        self.auxilary_objects.append(target_copy)
+
+
+    def register_animation_on_blender_timeline(self, start_frame, end_frame):
         # interpolate between shrink=0 and shrink=1
-        shrink_shape_key = source.data.shape_keys.key_blocks['Shrinkwrap']
+        shrink_shape_key = self.source.data.shape_keys.key_blocks['Shrinkwrap']
         shrink_shape_key.value = 0
         shrink_shape_key.keyframe_insert(data_path="value", frame=start_frame)
         shrink_shape_key.value = 1
         shrink_shape_key.keyframe_insert(data_path="value", frame=end_frame)
 
-        target_copy.location[1] += 3
 
 
+class CubeOverlap(Animation):
+    def __init__(self, source, direction='x', appear=True):
+        self.source = source
+        self.direction = direction
+        self.appear = appear
+        self.auxilary_objects = []
 
-class CubeOverlap:
-    def __init__(self, source, direction='x', appear=True, start_frame=1, end_frame=30):
-        idx_direction = {'x': 0, 'y': 1, 'z': 2}[direction]
-        
+    def setup(self):
+        # Make cube
+        source = self.source
         loc, scale = utils.get_aligned_bounding_box(source)
-
-        cube = utils.make_cube(loc, scale)
+        cube = basic_geometry.make_cube(loc, scale)
         cube.name = f"Cube Hide {source.name}"
-        bpy.context.collection.objects.link(cube)
-        cube.hide_render = True
+        cube.display_type = 'WIRE'
+        self.hiding_cube = cube
 
         # add boolean modifier
         modifier = source.modifiers.new("Boolean", type='BOOLEAN')
         modifier.operation = 'DIFFERENCE'
         modifier.object = cube
 
+        self.auxilary_objects.append(cube)
 
 
+    def register_animation_on_blender_timeline(self, start_frame, end_frame):
+        appear = self.appear
+        cube = self.hiding_cube
+        direction = self.direction
+
+        idx_direction = {'x': 0, 'y': 1, 'z': 2}[direction]
+
+        # Slide cube along `direction` to hide/show object
         bpy.context.scene.frame_set(start_frame)
         if not appear:
-            cube.location[idx_direction] += scale[idx_direction]
+            cube.location[idx_direction] += cube.dimensions[idx_direction]
         cube.keyframe_insert(data_path="location", index=-1)
-
 
         bpy.context.scene.frame_set(end_frame)
-        cube.location[idx_direction] -= scale[idx_direction]
+        cube.location[idx_direction] -= cube.dimensions[idx_direction]
         cube.keyframe_insert(data_path="location", index=-1)
 
 
-class Disappear(CubeOverlap):
-    def __init__(self, source, direction='x', start_frame=1, end_frame=30):
-        super(Disappear, self).__init__(source, direction, appear=False, start_frame=start_frame, end_frame=end_frame)
+class GraduallyDisappear(CubeOverlap):
+    def __init__(self, source, direction='x'):
+        super(Disappear, self).__init__(source, direction, appear=False)
 
 
-class Appear(CubeOverlap):
-    def __init__(self, source, direction='x', start_frame=1, end_frame=30):
-        super(Appear, self).__init__(source, direction, appear=True,  start_frame=start_frame, end_frame=end_frame)
+class GraduallyAppear(CubeOverlap):
+    def __init__(self, source, direction='x'):
+        super(Appear, self).__init__(source, direction, appear=True)
+
+
+
+
