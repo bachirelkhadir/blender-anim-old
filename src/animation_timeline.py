@@ -28,7 +28,7 @@ class AnimationTimeline:
         start = self._current_frame
         end = start + self._duration_to_number_frames(duration)
         animation.setup()
-        animation.register_animation_on_blender_timeline(start, end)
+        end = animation.register_animation_on_blender_timeline(start, end)
         for ob in animation.auxilary_objects:
             self.anim_master_collection.objects.link(ob)
         return end

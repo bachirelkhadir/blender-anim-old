@@ -44,6 +44,11 @@ class Scene:
         self.collections["Creation"].objects.link(cube)
         return cube
 
+    def duplicate_object(self, ob):
+        copy = utils.deep_copy_object(ob)
+        self.collections["Creation"].objects.link(copy)
+        return copy
+
     def play(self, animation, duration=1):
         end_frame = self.timeline.play_animation(animation, duration)
         self.last_frame = max(self.last_frame, end_frame)
@@ -112,6 +117,8 @@ class Scene:
         FNULL = open(os.devnull, 'w')
         sp.call(commands, stdout=FNULL, stderr=sp.STDOUT)
         FNULL.close()
+
+
 
     def _setup_blender_collections(self):
         collection_names = [("Latex", False, False),

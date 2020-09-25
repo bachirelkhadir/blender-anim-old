@@ -36,6 +36,7 @@ class BasicTransformation(Animation):
         for i, delta_i in enumerate(self.delta):
              object_pose[i] += delta_i
         self.source.keyframe_insert(data_path=name_transformation, index=-1)
+        return end_frame
 
 
 class Rotate(BasicTransformation):
@@ -61,6 +62,7 @@ class Appear(Animation):
     def register_animation_on_blender_timeline(self, start_frame, _):
         self.source.hide_render = 0
         self.source.keyframe_insert(data_path="hide_render", frame=start_frame)
+        return start_frame
 
 
 class Disappear(Animation):
@@ -71,6 +73,7 @@ class Disappear(Animation):
     def register_animation_on_blender_timeline(self, start_frame, _):
         self.source.hide_render = 1
         self.source.keyframe_insert(data_path="hide_render", frame=start_frame)
+        return start_frame
 
 
 class WrapInto(Animation):
@@ -107,7 +110,7 @@ class WrapInto(Animation):
         shrink_shape_key.keyframe_insert(data_path="value", frame=start_frame)
         shrink_shape_key.value = 1
         shrink_shape_key.keyframe_insert(data_path="value", frame=end_frame)
-
+        return end_frame
 
 
 class CubeOverlap(Animation):
@@ -150,6 +153,7 @@ class CubeOverlap(Animation):
         bpy.context.scene.frame_set(end_frame)
         cube.location[idx_direction] -= cube.dimensions[idx_direction]
         cube.keyframe_insert(data_path="location", index=-1)
+        return end_frame
 
 
 class GraduallyDisappear(CubeOverlap):

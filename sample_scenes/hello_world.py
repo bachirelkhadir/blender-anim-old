@@ -28,20 +28,37 @@ from src.materials import *
 
 scene = Scene(quality='LOW')
 
+# preexisting objects
 sphere = bpy.data.objects["Sphere"]
 monkey = bpy.data.objects["Monkey"]
 torus = bpy.data.objects["Torus"]
+
+# programmatically created objects
+monkey_copy = scene.duplicate_object(monkey)
+
+monkey_copy.location[1] -= 2
 cube = scene.add_cube(loc=(-5, 5, 0), scale=(3,3,3))
 color_bpy_object(cube, (.5, .1, 0.25, 1.))
 
-render_info_msg = (r"\textcolor{blue}{Engine:}" "{scene.engine} - "
-                   r"\textcolor{red}{Resolution:}" f"{scene.resolution}")
-render_info_msg = scene.add_text(render_info_msg.replace("_", " "))
-render_info_msg.location = (-3, 5, 0)
-render_info_msg.scale *= 2
 
-scene.play(Appear(torus))
-scene.wait(2)
+render_info_msg = (r"Engine:" f"{scene.engine}" r"- \\ Resolution:"
+                   f"{scene.resolution}" "\\\\"
+                   r"\Huge $f(x) = \sin(x)$")
+
+render_info_msg = scene.add_text(render_info_msg.replace("_", " "))
+render_info_msg.location = (3, 5, 0)
+
+for ob in (sphere, monkey, monkey_copy, torus, cube, render_info_msg):
+    scene.play(Appear(ob))
+
+scene.play(Rotate(monkey, [0, 2*np.pi, 0]), duration=2)
+#scene.wait(1)
+#scene.play(WrapInto(monkey, torus), duration=2)
+#scene.wait(2)
+
+
+
+
 # scene.play(Rotate(torus, (3, 2, 1)), duration=5)
 # scene.wait(1)
 # scene.play(Appear(render_info_msg))

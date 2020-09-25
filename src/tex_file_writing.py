@@ -156,6 +156,14 @@ def tex_to_bpy(expression, tex_collection, template_tex_file_body=None):
     parent.scale *= 500
     tex_collection.objects.link(parent)
 
+    # move origin to geomtry
+    bpy.ops.object.select_all(action='DESELECT')
+    bpy.context.view_layer.objects.active = parent
+    parent.select_set(True)
+    bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY',) #center='BOUNDS')
+
+    # clean selection
+    bpy.ops.object.select_all(action='DESELECT')    
     # remove unndeeded collection
     utils.remove_bpy_collection(svg_collection)
 
