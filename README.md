@@ -1,13 +1,13 @@
 # blender-anim
 
 Clone Repo
-``git clone https://github.com/bachirelkhadir/blender-anim.git``
+```git clone https://github.com/bachirelkhadir/blender-anim.git```
 
 
 Render hellow world scene to video
-``cd blender-anim``
+```cd blender-anim
 
-``blender --background assets/monkey_sphere.blend --python sample_scenes/hello_world.py -- -lrvp``
+blender --background assets/monkey_sphere.blend --python sample_scenes/hello_world.py -- -lrvp```
 
 # Command line arguments
 
