@@ -26,7 +26,16 @@ from src.materials import *
 # End Imports
 
 
-scene = Scene(quality='LOW')
+cmd_args = utils.parse_cmd_arguments()
+log.info(cmd_args)
+
+quality = 'MEDIUM'
+if cmd_args.high_quality:
+    quality = 'HIGH'
+if cmd_args.low_quality:
+    quality = 'LOW'
+
+scene = Scene(quality=quality)
 
 # preexisting objects
 sphere = bpy.data.objects["Sphere"]
@@ -74,22 +83,30 @@ scene.play(Rotate(monkey, [0, 2*np.pi, 0]), duration=2)
 # scene.play(Translate(monkey, (5, 0, 0)), duration=2)
 
 
+
 log.info("Saving render blend file")
 save_blend_file("outputs/render.blend")
 
-logging.info("Rendering")
-scene.render()
+if cmd_args.render_pngs:
+    logging.info("Rendering")
+    scene.render()
 
-logging.info("Making video")
-scene.write_frames_to_video()
+if cmd_args.make_video:
+    logging.info("Making video")
+    scene.write_frames_to_video()
 
-logging.info("Opening video")
-scene.open_video()
+if cmd_args.play_video:
+    logging.info("Opening video")
+    scene.open_video()
+elif cmd_args.open_blender:
+    logging.info("Opening blender file")
+    scene.open_blender()
+
 
 
 # to view render:
 #  eog outputs/render.png 
 
 # Local Variables:
-# compile-command: "cd .. && blender --background assets/monkey_sphere.blend --python sample_scenes/hello_world.py"
+# compile-command: "cd .. && blender --background assets/monkey_sphere.blend --python sample_scenes/hello_world.py -- -lrvp"
 # End:

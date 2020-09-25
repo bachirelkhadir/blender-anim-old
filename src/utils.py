@@ -1,8 +1,11 @@
 import os
+import sys
 import bpy
 import bmesh
 from mathutils import Vector
 import src.consts as consts
+import argparse
+import subprocess as sp
 
 
 def get_current_path():
@@ -13,6 +16,30 @@ def get_current_path():
 def create_folder_if_needed(path):
     if not os.path.exists(path):
         os.makedirs(path)
+
+def parse_cmd_arguments():
+    argv = sys.argv
+
+    if '--' not in argv:
+        argv = []
+    else:
+        argv = argv[argv.index("--") + 1:]  # get all args after "--"
+
+    parser = argparse.ArgumentParser(description='blender-anim')
+
+    parser.add_argument('-H', help="High quality", action="store_true", dest="high_quality", default=False)
+    parser.add_argument('-l', help="Low quality", action="store_true", dest="low_quality", default=False)
+    parser.add_argument('-p', help="Play video at the end", action="store_true", dest="play_video", default=False)
+    parser.add_argument('-b', help="Open blender file", action="store_true", dest="open_blender", default=False)
+    parser.add_argument('-r', help="Render pngs", action="store_true", dest="render_pngs", default=False)
+    parser.add_argument('-v', help="Write png frames to video with ffmpeg", action="store_true", dest="make_video", default=False)
+
+    return parser.parse_args(argv)
+
+def exec_silently(commands):
+    FNULL = open(os.devnull, 'w')
+    sp.call(commands, stdout=FNULL, stderr=sp.STDOUT)
+    FNULL.close()
 
 
 def get_aligned_bounding_box(ob):

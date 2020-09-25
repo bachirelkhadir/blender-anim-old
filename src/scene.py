@@ -1,6 +1,5 @@
 import os
 import bpy
-import subprocess as sp
 from tqdm import tqdm, trange
 from mathutils import Vector
 import src.utils as utils
@@ -114,11 +113,12 @@ class Scene:
                     "outputs/render.mp4"
         ]
         # commands.append("-g")
-        FNULL = open(os.devnull, 'w')
-        sp.call(commands, stdout=FNULL, stderr=sp.STDOUT)
-        FNULL.close()
+        utils.exec_silently(commands)
 
-
+    def open_blender(self):
+        commands = ["blender",
+                    "outputs/render.blend"]
+        utils.exec_silently(commands)
 
     def _setup_blender_collections(self):
         collection_names = [("Latex", False, False),
