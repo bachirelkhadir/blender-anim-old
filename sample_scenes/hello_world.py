@@ -104,9 +104,6 @@ elif cmd_args.open_blender:
 
 
 
-# to view render:
-#  eog outputs/render.png 
-
 # Local Variables:
 # compile-command: "cd .. && blender --background assets/monkey_sphere.blend --python sample_scenes/hello_world.py -- -lrvp"
 # End:
