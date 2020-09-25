@@ -1,7 +1,9 @@
 # blender-anim
 
 Clone Repo
-```git clone https://github.com/bachirelkhadir/blender-anim.git```
+```
+git clone https://github.com/bachirelkhadir/blender-anim.git
+```
 
 
 Render hellow world scene to video
