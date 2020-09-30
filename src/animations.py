@@ -158,12 +158,12 @@ class CubeOverlap(Animation):
 
 class GraduallyDisappear(CubeOverlap):
     def __init__(self, source, direction='x'):
-        super(Disappear, self).__init__(source, direction, appear=False)
+        super().__init__(source, direction, appear=False)
 
 
 class GraduallyAppear(CubeOverlap):
     def __init__(self, source, direction='x'):
-        super(Appear, self).__init__(source, direction, appear=True)
+        super().__init__(source, direction, appear=True)
 
 
 

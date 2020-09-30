@@ -1,6 +1,7 @@
 from mathutils import Vector
 import bpy
 import bmesh
+import math
 
 
 def make_cube(loc, scale, name="Cube"):
@@ -18,6 +19,24 @@ def make_cube(loc, scale, name="Cube"):
     basic_cube.scale = scale
 
     return basic_cube
+
+
+def make_line(start, end, thinkness, name="Line"):
+    dx, dy, dz = diff = end-start
+    dist = diff.length
+    center = (start + end)/2
+    bpy.ops.mesh.primitive_cylinder_add(
+        radius=thinkness,
+        depth=dist,
+        location=center
+    )
+    cylinder = bpy.context.object
+    phi = math.atan2(dy, dx)
+    theta = math.acos(dz/dist)
+
+    cylinder.rotation_euler[1] = theta
+    cylinder.rotation_euler[2] = phi
+    return cylinder
 
 
 def make_sphere(center=Vector([0,0,0]), radius=1.):

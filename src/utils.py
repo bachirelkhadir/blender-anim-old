@@ -34,6 +34,9 @@ def parse_cmd_arguments():
     parser.add_argument('-r', help="Render pngs", action="store_true", dest="render_pngs", default=False)
     parser.add_argument('-v', help="Write png frames to video with ffmpeg", action="store_true", dest="make_video", default=False)
 
+    parser.add_argument('-n', help="Start/End frame", type=str, dest="start_end_frame", default='-1,-1')
+
+
     return parser.parse_args(argv)
 
 def exec_silently(commands):
@@ -43,11 +46,15 @@ def exec_silently(commands):
 
 
 def get_aligned_bounding_box(ob):
+    ob = deep_copy_object(ob)
     bbox_corners = [tuple(ob.matrix_world @ Vector(corner)) for corner in ob.bound_box]
     lower_vert = Vector([ min([v[i] for v in bbox_corners]) for i in range(3) ])
     upper_vert = Vector([ max([v[i] for v in bbox_corners]) for i in range(3) ])
     center = (upper_vert + lower_vert)/2
     scale = upper_vert - lower_vert
+
+    # center = ob.matrix_world @ ob.location
+    # scale = ob.matrix_world @ ob.dimensions
     # avoid 2D box
     scale += Vector([1, 1, 1]) * 1e-3
     return (center, scale)
@@ -62,6 +69,7 @@ def deep_copy_object(obj):
     copy.animation_data_clear()
     if copy.data.shape_keys:
         copy.data.shape_keys.animation_data_clear()
+    copy.modifiers.clear()
     return copy
 
 
