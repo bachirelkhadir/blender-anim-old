@@ -19,10 +19,10 @@ from tqdm import tqdm, trange
 
 from src.consts import *
 from src.utils import *
-from src.animations import *
+from src.animations import Appear, Rotate, Scale
 from src.scene import *
 from src.materials import *
-
+from src.vobject import VGroup
 # End Imports
 
 
@@ -58,8 +58,9 @@ cube = scene.add_cube(loc=(-5, 5, 0), scale=(3,3,3))
 color_bpy_object(cube, (.5, .1, 0.25, 1.))
 
 # line
-line = scene.add_line(start=(-3, -2, 0), end=(3, -2, 0), thickness=.02)
-color_bpy_object(line, (1, 0, 1, 1.))
+axis = scene.add_3d_axis(thickness=.02)
+for line in axis:
+    color_bpy_object(line, (1, 0, 1, 1.))
 
 render_info_msg = (r"Engine:" f"{scene.engine}" r"- \\"
                    "Resolution: "
@@ -73,56 +74,15 @@ render_info_msg.location = (3, 5, 0)
 # Animations
 ###############
 
-scene.play(Appear(render_info_msg))
-scene.play(Appear(line))
-scene.play(GraduallyAppear(line, 'x'), duration=1)
+# scene.play(Appear(monkey))
+scene.play(Rotate(monkey, (3, 2, 1)), duration=1)
+for line in axis:
+    scene.play(Appear(line))
+scene.play(Scale(VGroup(*axis), (5, 5, 5)), duration=0)
+scene.play(Rotate(VGroup(*axis), (0, 1, 1)), duration=1)
 
 # monkey gradually disappears
-scene.play(Appear(monkey))
-scene.play(GraduallyAppear(monkey, 'x'), duration=1)
 scene.wait(1)
-
-if False:
-    # monkey gradually appears
-    scene.play(GraduallyDisappear(monkey, 'y'))
-    scene.wait(1)
-
-    # monkey rotate and sphere appears
-
-    scene.play(Appear(monkey_copy))
-    scene.wait(.5)
-
-    # sphere transforms into monkey
-    scene.play(WrapInto(monkey_copy, sphere), duration=2)
-    scene.wait(2)
-
-    # Torus enters
-    scene.play(Appear(torus))
-    scene.play(Translate(torus, (-2, 0, 0)))
-    scene.wait(1)
-    scene.play(Rotate(torus, (3, 2, 1)), duration=2)
-    scene.wait(2)
-    scene.play(WrapInto(torus, monkey), duration=2)
-    scene.wait(2)
-
-
-
-
-# scene.play(Rotate(torus, (3, 2, 1)), duration=5)
-# scene.wait(1)
-# scene.play(Appear(render_info_msg))
-# scene.play(Translate(render_info_msg, (0, -2, 0)), duration=1)
-# scene.wait(3)
-
-# scene.play(Appear(monkey))
-
-# scene.wait(2)
-# scene.play(Appear(monkey))
-# scene.play(Translate(monkey, (0, 5, 0)), duration=2)
-# scene.wait(1)
-# scene.play(Translate(monkey, (5, 0, 0)), duration=2)
-
-
 
 log.info("Saving render blend file")
 save_blend_file("outputs/render.blend")
@@ -149,5 +109,5 @@ elif cmd_args.open_blender:
 
 
 # Local Variables:
-# compile-command: "cd .. && blender --background assets/monkey_sphere.blend --python sample_scenes/hello_world.py -- -lrvp"
+# compile-command: "cd .. && blender --background assets/monkey_sphere.blend --python sample_scenes/threed_axis_scene.py -- -lrvp"
 # End:

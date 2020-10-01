@@ -3,7 +3,7 @@ from mathutils import Vector, Euler
 import src.utils as utils
 from src.consts import *
 import src.basic_geometry as basic_geometry
-
+from src.vobject import VGroup
 
 class Animation:
     # TODO: apply animation to group of objects
@@ -20,26 +20,28 @@ class Animation:
 # Basic transformations: Translate, Rotate, Scale
 class BasicTransformation(Animation):
     def __init__(self, source, delta, name_transformation='location'):
-        self.source = source
+        self.sources = source.get_children() if isinstance(source, VGroup) else [source]
         self.delta = delta
         self.name_transformation = name_transformation
         self.auxilary_objects = []
 
 
     def register_animation_on_blender_timeline(self, start_frame, end_frame):
-        name_transformation = self.name_transformation
-        bpy.context.scene.frame_set(start_frame)
-        self.source.keyframe_insert(data_path=name_transformation, index=-1)
+        for source in self.sources:
+            name_transformation = self.name_transformation
+            bpy.context.scene.frame_set(start_frame)
+            source.keyframe_insert(data_path=name_transformation, index=-1)
 
-        bpy.context.scene.frame_set(end_frame)
-        object_pose = getattr(self.source, name_transformation)
-        for i, delta_i in enumerate(self.delta):
-             object_pose[i] += delta_i
-        self.source.keyframe_insert(data_path=name_transformation, index=-1)
+            bpy.context.scene.frame_set(end_frame)
+            object_pose = getattr(source, name_transformation)
+            for i, delta_i in enumerate(self.delta):
+                object_pose[i] += delta_i
+            source.keyframe_insert(data_path=name_transformation, index=-1)
         return end_frame
 
 
 class Rotate(BasicTransformation):
+    # Fix rotation axis
     def __init__(self, source, euler_rotation):
         super().__init__(source, euler_rotation, "rotation_euler")
 

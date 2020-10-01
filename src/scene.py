@@ -45,16 +45,25 @@ class Scene:
         self.collections["Creation"].objects.link(cube)
         return cube
 
-    def add_line(self, start, end, thinkness, name="Line"):
+    def add_line(self, start, end, thickness, name="Line"):
         """
         Make a line
         """
         start = Vector(start)
         end = Vector(end)
-        line = basic_geometry.make_line(start, end, thinkness, name)
+        line = basic_geometry.make_line(start, end, thickness, name)
         self.play(animations.Disappear(line))
         self.collections["Creation"].objects.link(line)
         return line
+
+    def add_3d_axis(self, thickness, name="3DAxis"):
+        """
+        Make a 3D axis
+        """
+        origin = Vector((0,0,0))
+        end_points = [Vector((1,0,0)), Vector((0,1,0)), Vector((0,0,1))]
+        axis_lines = [self.add_line(origin, end, thickness) for end in end_points]
+        return axis_lines
 
     def duplicate_object(self, ob):
         copy = utils.deep_copy_object(ob)
