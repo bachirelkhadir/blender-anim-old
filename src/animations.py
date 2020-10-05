@@ -18,6 +18,7 @@ class Animation:
 
 
 # Basic transformations: Translate, Rotate, Scale
+# TOD: for now, basic transformation cannot overlap with each other
 class BasicTransformation(Animation):
     def __init__(self, source, delta, name_transformation='location'):
         self.sources = source.get_children() if isinstance(source, VGroup) else [source]
@@ -50,11 +51,76 @@ class Translate(BasicTransformation):
     def __init__(self, source, shift):
         super().__init__(source, shift, "location")
 
+    def register_animation_on_blender_timeline(self, start_frame, end_frame):
+        name_transformation = self.name_transformation
+
+
+        def keyframe_insert_all():
+            for source in self.sources:
+                # Save loc+rot+scale because a global scaling can affect all of
+                # those
+                for data_path in ('scale', 'location', 'rotation_euler'):
+                    source.keyframe_insert(data_path=data_path, index=-1)
+
+        bpy.context.scene.frame_set(start_frame)
+        keyframe_insert_all()
+
+        # Select all
+        bpy.ops.object.select_all(action='DESELECT')
+        bpy.context.view_layer.objects.active = self.sources[0]
+        for source in self.sources:
+            source.select_set(state=True)
+
+        bpy.context.scene.frame_set(end_frame)
+
+        # resize all objects using ops
+        # bpy.ops.transform.resize(value=self.delta)
+        bpy.ops.transform.translate(value=self.delta, orient_type='GLOBAL',
+                                    orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+                                    orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False,
+                                    proportional_edit_falloff='SMOOTH', proportional_size=1,
+                                    use_proportional_connected=False, use_proportional_projected=False)
+
+
+        keyframe_insert_all()
+        print("Sacling...")
+        return end_frame
+
 
 class Scale(BasicTransformation):
     def __init__(self, source, scale):
         super().__init__(source, scale, "scale")
 
+    def register_animation_on_blender_timeline(self, start_frame, end_frame):
+        name_transformation = self.name_transformation
+
+
+        def keyframe_insert_all():
+            for source in self.sources:
+                # Save loc+rot+scale because a global scaling can affect all of
+                # those
+                for data_path in ('scale', 'location', 'rotation_euler'):
+                    source.keyframe_insert(data_path=data_path, index=-1)
+
+        bpy.context.scene.frame_set(start_frame)
+        keyframe_insert_all()
+
+        # Select all
+        bpy.ops.object.select_all(action='DESELECT')
+        bpy.context.view_layer.objects.active = self.sources[0]
+        for source in self.sources:
+            source.select_set(state=True)
+
+        bpy.context.scene.frame_set(end_frame)
+
+        # resize all objects using ops
+        # bpy.ops.transform.resize(value=self.delta)
+        bpy.ops.transform.resize(value=self.delta, orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+
+
+        keyframe_insert_all()
+        print("Sacling...")
+        return end_frame
 
 class Appear(Animation):
     def __init__(self, source):

@@ -25,6 +25,8 @@ def make_line(start, end, thinkness, name="Line"):
     dx, dy, dz = diff = end-start
     dist = diff.length
     center = (start + end)/2
+    # TODO: avoid ops so that the objects doesn't get added to the selected
+    # collection
     bpy.ops.mesh.primitive_cylinder_add(
         radius=thinkness,
         depth=dist,
