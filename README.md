@@ -1,9 +1,15 @@
 # blender-anim
 
-Clone Repo
+Install blender, clone Repo
 ```
 git clone https://github.com/bachirelkhadir/blender-anim.git
 ```
+
+Install python dependencies
+```
+/Applications/Blender.app/Contents/Resources/2.90/python/bin/python3.7m -m pip install -U tqdm
+```
+
 
 
 Render hellow world scene to video
