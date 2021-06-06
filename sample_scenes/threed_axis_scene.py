@@ -88,7 +88,7 @@ log.info("Saving render blend file")
 save_blend_file("outputs/render.blend")
 
 start, end = map(int, cmd_args.start_end_frame.split(','))
-log.info("Start @ frame {start} and end @ {end}")
+log.info(f"Start @ frame {start} and end @ {end}")
 
 if cmd_args.render_pngs:
     logging.info("Rendering")

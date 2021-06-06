@@ -18,8 +18,10 @@ TEX_USE_CTEX = False
 TEX_TEXT_TO_REPLACE = "YourTextHere"
 # RESOLUTION = (800, 600)
 
-SVG_CLEANER_BIN = "svgcleaner-bin/svgcleaner"
+SVG_CLEANER_BIN = "svgcleaner"
 FFMPEG_BIN = "ffmpeg"
+BLENDER_BIN = "/Applications/Blender.app/Contents/MacOS/Blender" # "blender"
+XDG_OPEN = "open" # "xdg-open"
 
 CURRENT_PATH = utils.get_current_path()
 TEX_DIR = os.path.join(CURRENT_PATH, "temps/")

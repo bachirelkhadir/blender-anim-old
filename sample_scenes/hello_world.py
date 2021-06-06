@@ -11,8 +11,10 @@ import logging
 logging.basicConfig(level=logging.INFO,
                     format="%(levelname)-5s: %(name)-9s | %(asctime)-15s | %(message)s")
 log = logging.getLogger(__name__)
-sys.path.append(os.path.dirname(os.path.dirname(bpy.data.filepath)))
-sys.path.append('/home/bachir/.local/lib/python3.7/site-packages')
+extra_path = os.path.dirname(os.path.dirname(bpy.data.filepath))
+log.info(f"Path: {extra_path} added to path")
+sys.path.append(extra_path)
+#sys.path.append('/home/bachir/.local/lib/python3.7/site-packages')
 
 
 from tqdm import tqdm, trange
@@ -128,7 +130,7 @@ log.info("Saving render blend file")
 save_blend_file("outputs/render.blend")
 
 start, end = map(int, cmd_args.start_end_frame.split(','))
-log.info("Start @ frame {start} and end @ {end}")
+log.info(f"Start @ frame {start} and end @ {end}")
 
 if cmd_args.render_pngs:
     logging.info("Rendering")

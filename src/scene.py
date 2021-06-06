@@ -45,6 +45,15 @@ class Scene:
         self.collections["Creation"].objects.link(cube)
         return cube
 
+    def add_plane(self, loc=Vector([0,0,0]), scale=Vector([1,1,1]), name="Plane"):
+        """
+        Make plane and add it the `Creation` collection
+        """
+        plane = basic_geometry.make_plane(loc, scale, name)
+        self.play(animations.Disappear(plane))
+        self.collections["Creation"].objects.link(plane)
+        return plane
+
     def add_line(self, start, end, thickness, name="Line"):
         """
         Make a line
@@ -101,13 +110,17 @@ class Scene:
         bpy.context.scene.frame_end = end
         idx = 0
         self.rendered_imgs_filepaths = []
-        for frame_number in trange(start, end, 1, desc="Rendering frame"):
+        bar = trange(start, end, 1, desc="Rendering frame")
+        for frame_number in bar:
             fn = f"render-frame{frame_number:02}.png"
             self.rendered_imgs_filepaths.append(fn)
-            bpy.context.scene.render.filepath = os.path.join(
+            render_path = os.path.join(
                 CURRENT_PATH,
                 f"outputs/{fn}"
             )
+
+            bar.set_description(f"Rendering to {render_path}")
+            bpy.context.scene.render.filepath = render_path
             bpy.context.scene.frame_set(frame_number)
             bpy.ops.render.render(write_still=True)
             idx += 1
@@ -146,14 +159,14 @@ class Scene:
         os.system(" ".join(commands))
 
     def open_video(self):
-        commands = ["xdg-open",
+        commands = [XDG_OPEN,
                     "outputs/render.mp4"
         ]
         # commands.append("-g")
         utils.exec_silently(commands)
 
     def open_blender(self):
-        commands = ["blender",
+        commands = [BLENDER_BIN,
                     "outputs/render.blend"]
         utils.exec_silently(commands)
 

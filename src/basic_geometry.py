@@ -20,6 +20,11 @@ def make_cube(loc, scale, name="Cube"):
 
     return basic_cube
 
+def make_plane(loc, scale, name="Plane"):
+    plane = make_cube(loc, scale, name)
+    plane.scale[2] = .1
+
+    return plane
 
 def make_line(start, end, thinkness, name="Line"):
     dx, dy, dz = diff = end-start
