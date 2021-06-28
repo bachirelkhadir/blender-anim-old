@@ -8,7 +8,7 @@ import bpy
 import logging
 from src.consts import *
 
-logging.basicConfig(level=logging.ERROR,
+logging.basicConfig(level=logging.INFO,
                     format="%(levelname)-5s: %(name)-9s | %(asctime)-15s | %(message)s")
 log = logging.getLogger(__name__)
 log.info(f"Paths: {EXTRA_PATHS} added to path")
@@ -36,28 +36,28 @@ if cmd_args.low_quality:
     quality = 'LOW'
 
 
-def make_scene():
-    return Scene(quality=quality)
 
+def save_and_render(class_scene, start=None, end=None):
+    scene = class_scene(quality=quality)
+    scene.construct()
+    class_name = class_scene.__name__
 
-def save_and_render(scene):
+    destination = f"outputs/{class_name}/"
+    log.info(f"Saving render blend file to {destination}")
+    utils.create_folder_if_needed(destination)
+    save_blend_file(os.path.join(destination, f"{class_name}.blend"))
 
-    log.info("Saving render blend file")
-    save_blend_file("outputs/render.blend")
-
-    start, end = map(int, cmd_args.start_end_frame.split(','))
+    if start is None or end is None:
+        start, end = map(int, cmd_args.start_end_frame.split(','))
     log.info(f"Start @ frame {start} and end @ {end}")
 
     if cmd_args.render_pngs:
         logging.info("-"*50)
         logging.info("Rendering")
-        scene.render(start, end)
-
-
-    elif cmd_args.open_blender:
-        logging.info("-"*50)
-        logging.info("Opening blender file")
-        scene.open_blender()
+        scene.render(start, end, filename=os.path.join(destination,
+                                                       "images",
+                                                       class_name,
+                                                       ))
 
     sys.exit()
 

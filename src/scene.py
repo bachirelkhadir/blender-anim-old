@@ -1,4 +1,5 @@
 import os
+import abc
 import bpy
 from tqdm import tqdm, trange
 from mathutils import Vector
@@ -131,7 +132,8 @@ class Scene:
             fn = f"{filename}-{frame_number:02}.png"
             render_path = os.path.join(
                 CURRENT_PATH,
-                f"outputs/{fn}"
+                fn
+                #f"outputs/{fn}"
             )
             return render_path
 
@@ -246,3 +248,7 @@ class Scene:
 
     def print_animation_outline(self):
         self.timeline.print_outline()
+
+
+    def construct(self):
+        raise NotImplementedError
