@@ -135,13 +135,7 @@ class Scene:
         self.rendered_imgs_filepaths = []
 
         def get_filename(frame_number):
-            fn = f"{filename}-{frame_number:02}.png"
-            render_path = os.path.join(
-                CURRENT_PATH,
-                fn
-                #f"outputs/{fn}"
-            )
-            return render_path
+            return f"{filename}-{frame_number:02}.png"
 
         log.info(f"Rendering to {get_filename(0)}")
 
