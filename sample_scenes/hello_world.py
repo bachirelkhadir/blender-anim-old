@@ -18,6 +18,7 @@ class HelloWorldScene(Scene):
         self.play(Appear(cube))
         self.play(Appear(surf))
         self.play(Translate(lab, UP))
+        self.play(Translate(surf, OUT))
         self.wait()
 
     def add_text_facing_camera(self, s):
@@ -29,4 +30,4 @@ class HelloWorldScene(Scene):
         color_bpy_object(lab, BABY_YELLOW)
         return lab
 
-save_and_render(HelloWorldScene, 1, 2)
+save_and_render(HelloWorldScene, 1, 10)
