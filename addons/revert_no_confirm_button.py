@@ -2,10 +2,6 @@
 
 import bpy
 
-bl_info = {
-    "name": "Revert no confirm",
-    "category": "Object",
-}
 
 
 
