@@ -35,11 +35,14 @@ class RevertNoConfirmPanel(bpy.types.Panel):
 
 
 def register():
+    print("registering revert no confirm op")
     bpy.utils.register_class(RevertNoConfirmOp)
     bpy.utils.register_class(RevertNoConfirmPanel)
 
 
 def unregister():
+
+    print("unregistering revert no confirm op")
     bpy.utils.unregister_class(RevertNoConfirmOp)
     bpy.utils.unregister_class(RevertNoConfirmPanel)
 
