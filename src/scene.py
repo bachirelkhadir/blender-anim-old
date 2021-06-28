@@ -9,6 +9,10 @@ import src.tex_file_writing as tex2bpy
 import src.animation_timeline as animation_timeline
 import src.animations as animations
 import src.basic_geometry as basic_geometry
+from src.vobject import VGroup
+from src.materials import color_bpy_object
+from src.color_list import *
+
 
 log = logging.getLogger(__name__)
 
@@ -19,7 +23,7 @@ class Scene:
         """
         self.quality = quality 
         self.fps = FPS_QUALITY[quality]
-        self.engine = 'CYCLES' if quality in ('HIGH', 'VERY_HIGH') else 'BLENDER_EEVEE'
+        self.engine = ENGINE
         self.last_frame = 0
         self.resolution = RESOLUTION_QUALITY[quality]
         self._setup_blender_collections()
@@ -33,7 +37,7 @@ class Scene:
     def add_text(self, expression):
         text = tex2bpy.tex_to_bpy(expression,
                                   self.collections["Latex"])
-        self.play(animations.Disappear(text))        
+        self.play(animations.Disappear(text), start_frame=0)
         return text
 
     def add_cube(self, loc=Vector([0,0,0]), scale=Vector([1,1,1]), name="Cube"):
@@ -41,7 +45,7 @@ class Scene:
         Make cube and add it the `Creation` collection
         """
         cube = basic_geometry.make_cube(loc, scale, name)
-        self.play(animations.Disappear(cube))
+        self.play(animations.Disappear(cube), start_frame=0)
         self.collections["Creation"].objects.link(cube)
         return cube
 
@@ -50,7 +54,7 @@ class Scene:
         Make plane and add it the `Creation` collection
         """
         plane = basic_geometry.make_plane(loc, scale, name)
-        self.play(animations.Disappear(plane))
+        self.play(animations.Disappear(plane), start_frame=0)
         self.collections["Creation"].objects.link(plane)
         return plane
 
@@ -61,7 +65,7 @@ class Scene:
         start = Vector(start)
         end = Vector(end)
         line = basic_geometry.make_line(start, end, thickness, name)
-        self.play(animations.Disappear(line))
+        self.play(animations.Disappear(line), start_frame=0)
         self.collections["Creation"].objects.link(line)
         return line
 
@@ -70,25 +74,36 @@ class Scene:
         Make a 3D axis
         """
         origin = Vector((0,0,0))
-        end_points = [Vector((1,0,0)), Vector((0,1,0)), Vector((0,0,1))]
+        end_points = [Vector((10,0,0)), Vector((0,10,0)), Vector((0,0,10))]
         axis_lines = [self.add_line(origin, end, thickness) for end in end_points]
-        return axis_lines
+        colors = [ RED, BLUE, GREEN ]
+        for col, ax in zip(colors, axis_lines):
+           color_bpy_object(ax, col)
+        return VGroup(*axis_lines)
 
     def duplicate_object(self, ob):
         copy = utils.deep_copy_object(ob)
-        self.play(animations.Disappear(ob))
+        self.play(animations.Disappear(copy), start_frame=0)
         self.collections["Creation"].objects.link(copy)
         return copy
 
-    def play(self, animation, duration=1):
-        end_frame = self.timeline.play_animation(animation, duration)
+    def play(self, animation, duration=1, start_frame=None):
+        end_frame = self.timeline.play_animation(animation, duration,
+                                                 start_frame=start_frame)
         self.last_frame = max(self.last_frame, end_frame)
 
-    def wait(self, duration):
+    def wait(self, duration=1):
         end_frame = self.timeline.wait(duration)
         self.last_frame = max(self.last_frame, end_frame)
 
-    def render(self, start=-1, end=-1):
+    def render(self, start=-1, end=-1, filename="render/render-frame", physics=False):
+        if start >= end:
+            logging.info(f"start >= end ({start} >= {end}), I will not render anything.")
+            return
+        if physics:
+            log.info("Baking physics")
+            bpy.ops.ptcache.bake_all()
+
         bpy.context.scene.render.resolution_x = self.resolution[0]
         bpy.context.scene.render.resolution_y = self.resolution[1]
 
@@ -96,7 +111,8 @@ class Scene:
             start = 0
         if end < 0:
             end = self.last_frame
-        
+
+        logging.info(f"engine: {self.engine}  @ {self.resolution} @ {self.fps} frames/s")
         # redirect output to log file
         logfile = 'blender_render.log'
         open(logfile, 'a').close()
@@ -108,26 +124,30 @@ class Scene:
         bpy.context.scene.render.engine = self.engine
         bpy.context.scene.frame_start = start
         bpy.context.scene.frame_end = end
-        idx = 0
+        # TODO: do we need this variable?
         self.rendered_imgs_filepaths = []
-        bar = trange(start, end, 1, desc="Rendering frame")
-        for frame_number in bar:
-            fn = f"render-frame{frame_number:02}.png"
-            self.rendered_imgs_filepaths.append(fn)
+
+        def get_filename(frame_number):
+            fn = f"{filename}-{frame_number:02}.png"
             render_path = os.path.join(
                 CURRENT_PATH,
                 f"outputs/{fn}"
             )
+            return render_path
 
-            bar.set_description(f"Rendering to {render_path}")
+        log.info(f"Rendering to {get_filename(0)}")
+
+        bar = trange(start, end, 1, desc="Rendering frame")
+        for frame_number in bar:
+            render_path = get_filename(frame_number)
             bpy.context.scene.render.filepath = render_path
             bpy.context.scene.frame_set(frame_number)
             bpy.ops.render.render(write_still=True)
-            idx += 1
         # disable output redirection
         os.close(1)
         os.dup(old)
         os.close(old)
+        log.info(f"Last frame rendered: {render_path}")
         
     def write_frames_to_video(self, start=-1, end=-1):
         # TODO: do conversion in blender instead of ffmpeg
@@ -171,22 +191,58 @@ class Scene:
         utils.exec_silently(commands)
 
     def _setup_blender_collections(self):
-        collection_names = [("Latex", False, False),
-                            ("Creation", False, False),
-                            ("Animation", False, True),
-                            ("Render", False, False),
-        ]
 
-        self.collections = {
-            col_name: utils.create_bpy_collection(col_name, hide_viewport, hide_render)
-            for col_name, hide_viewport, hide_render in collection_names
-        }
+        existing_collections = bpy.data.collections
+
+        if bpy.data.filepath == "":
+            logging.warning("Warning, no blend file specified. I will use the default blender startup file (and remove the cube).")
+            objs = bpy.data.objects
+            objs.remove(objs["Cube"], do_unlink=True)
+            #utils.remove_bpy_collection(existing_collections["Collection"])
+
+
+        collection_names = [
+            ("Assets", False, False),
+            ("Latex", False, False),
+            ("Creation", False, False),
+            ("Animation", False, True),
+            ("Render", False, False),
+        ]
+        # create collections that don't already exist
+        self.collections = {}
+        for col_name, hide_viewport, hide_render in collection_names:
+            col = None
+            if col_name in existing_collections:
+                logging.info(f"Collection {col_name} already exists!")
+                col = existing_collections[col_name]
+            else:
+                logging.info(f"Collection {col_name} created.")
+                col = utils.create_bpy_collection(col_name, hide_viewport, hide_render)
+            self.collections[col_name] = col
+            col.hide_viewport = hide_viewport
+            col.hide_render = hide_render
 
     def _setup_timeline(self):
         self.timeline = animation_timeline.AnimationTimeline(self.fps, self.collections["Animation"])
 
     def _hide_all_asset_objects(self):
         for ob in bpy.data.collections["Assets"].objects:
-            self.play(animations.Disappear(ob))
+            self.play(animations.Disappear(ob), start_frame=0)
+
+    def print_scene_outline(self, include_unlinked=False):
+        """
+        Prints all collections and their children
+        """
+        if include_unlinked:
+            scene_master_col = bpy.data.collections
+        else:
+            scene_master_col = bpy.context.scene.collection.children
+
+        for col in scene_master_col:
+            print(">", col.name)
+            for obj in col.objects:
+                print("\t", obj.name)
 
 
+    def print_animation_outline(self):
+        self.timeline.print_outline()

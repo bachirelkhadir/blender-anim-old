@@ -7,12 +7,27 @@ git clone https://github.com/bachirelkhadir/blender-anim.git
 
 Install python dependencies
 ```
-/Applications/Blender.app/Contents/Resources/2.90/python/bin/python3.7m -m pip install -U tqdm
+/Applications/Blender.app/Contents/Resources/2.90/python/bin/python3.7m -m pip install -U tqdm pyaml
 ```
 
 
+or in Linux:
 
-Render hellow world scene to video
+```
+/snap/blender/161/2.93/python/bin/python3.9 -m ensurepip
+/snap/blender/161/2.93/python/bin/python3.9  -m pip install -U tqdm pyaml
+```
+make sure local site-packages is in path
+
+```
+/home/bachir/.local/lib/python3.9/site-packages
+```
+
+
+*Make* sure cleansvg is installed.
+
+# RUN
+
 ```
 cd blender-anim
 

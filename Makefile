@@ -1,8 +1,5 @@
-BLENDER= "/Applications/Blender.app/Contents/MacOS/Blender" # "blender"
-
-all:
-	${BLENDER} --background assets/polytope.blend --python sample_scenes/polytope.py -- -lrvp
+BLENDER= "blender"
 
 
-logo:
-	${BLENDER} --background assets/polytope.blend --python sample_scenes/logo.py -- -lrvp
+hello:
+	${BLENDER} --background assets/hello_world.blend --python sample_scenes/hello_world.py -- -lr -n 0,10

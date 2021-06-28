@@ -1,3 +1,4 @@
+import logging
 import bpy
 from mathutils import Vector, Euler
 import src.utils as utils
@@ -15,6 +16,7 @@ class Animation:
 
     def register_animation_on_blender_timeline(self, start_frame, end_frame):
         raise NotImplementedError
+
 
 
 # Basic transformations: Translate, Rotate, Scale
@@ -83,7 +85,6 @@ class Translate(BasicTransformation):
 
 
         keyframe_insert_all()
-        print("Sacling...")
         return end_frame
 
 
@@ -124,23 +125,25 @@ class Scale(BasicTransformation):
 
 class Appear(Animation):
     def __init__(self, source):
-        self.source = source
+        self.sources = source.get_children() if isinstance(source, VGroup) else [source]
         self.auxilary_objects = []
 
     def register_animation_on_blender_timeline(self, start_frame, _):
-        self.source.hide_render = 0
-        self.source.keyframe_insert(data_path="hide_render", frame=start_frame)
+        for source in self.sources:
+            source.hide_render = 0
+            source.keyframe_insert(data_path="hide_render", frame=start_frame)
         return start_frame
 
 
 class Disappear(Animation):
     def __init__(self, source):
-        self.source = source
+        self.sources = source.get_children() if isinstance(source, VGroup) else [source]
         self.auxilary_objects = []
 
     def register_animation_on_blender_timeline(self, start_frame, _):
-        self.source.hide_render = 1
-        self.source.keyframe_insert(data_path="hide_render", frame=start_frame)
+        for source in self.sources:
+            source.hide_render = 1
+            source.keyframe_insert(data_path="hide_render", frame=start_frame)
         return start_frame
 
 
@@ -234,5 +237,28 @@ class GraduallyAppear(CubeOverlap):
         super().__init__(source, direction, appear=True)
 
 
+class AnimateShapeKey(Animation):
+    def __init__(self, source, key_name, start_value, end_value):
+        self.source = source
+        self.sources = [source]
+        self.start_value = start_value
+        self.end_value = end_value
+        self.key_name = key_name
+        self.auxilary_objects = []
 
 
+
+    def register_animation_on_blender_timeline(self, start_frame, end_frame):
+        logging.info(f"Animate keyframe {start_frame} --> {end_frame}")
+        # interpolate between start and end value
+        if not self.source.data.shape_keys:
+            raise Exception(f"Object '{self.source.name}' doesn't have shape keys")
+        if self.key_name not in self.source.data.shape_keys.key_blocks:
+            logging.error(f"{self.key_name} is not a valid shape key for {self.source.name}. Available keys: {self.source.data.shape_keys.key_blocks.items()}")
+            raise Exception(f"{self.key_name} is not a valid shape key for {self.source.name}")
+        shape_key = self.source.data.shape_keys.key_blocks[self.key_name]
+        shape_key.value = self.start_value
+        shape_key.keyframe_insert(data_path="value", frame=start_frame)
+        shape_key.value = self.end_value
+        shape_key.keyframe_insert(data_path="value", frame=end_frame)
+        return end_frame

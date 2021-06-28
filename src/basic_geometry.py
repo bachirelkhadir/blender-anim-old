@@ -22,7 +22,7 @@ def make_cube(loc, scale, name="Cube"):
 
 def make_plane(loc, scale, name="Plane"):
     plane = make_cube(loc, scale, name)
-    plane.scale[2] = .1
+    plane.scale[2] = .01
 
     return plane
 

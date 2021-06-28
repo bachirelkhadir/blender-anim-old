@@ -89,8 +89,10 @@ def dvi_to_svg(dvi_file, regen_if_exists=False):
     result = Path(result).as_posix()
     result_cleaned = result[:-4]+"-cleaned.svg"
     dvi_file = Path(dvi_file).as_posix()
-    if True or not os.path.exists(result):
+    if os.path.exists(result_cleaned):
+        logging.debug(f"{result_cleaned} already exists, using cached version")
 
+    else:
         # dvi -> svg
         commands = [
             "dvisvgm",
@@ -162,10 +164,17 @@ def tex_to_bpy(expression, tex_collection, template_tex_file_body=None):
     parent.select_set(True)
     bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY',) #center='BOUNDS')
 
+
     # clean selection
     bpy.ops.object.select_all(action='DESELECT')    
     # remove unndeeded collection
     utils.remove_bpy_collection(svg_collection)
+
+    # apply transform
+    utils.bpy_apply_transform(parent, location=False, scale=True, rotation=False)
+
+    # rename
+    parent.name = expression
 
     return parent
 

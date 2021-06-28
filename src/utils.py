@@ -2,7 +2,7 @@ import os
 import sys
 import bpy
 import bmesh
-from mathutils import Vector
+from mathutils import Vector, Matrix
 import src.consts as consts
 import argparse
 import subprocess as sp
@@ -70,6 +70,7 @@ def deep_copy_object(obj):
     if copy.data.shape_keys:
         copy.data.shape_keys.animation_data_clear()
     copy.modifiers.clear()
+    copy.active_material = obj.active_material.copy()
     return copy
 
 
@@ -114,7 +115,6 @@ def remove_bpy_collection(col):
     scene_master_col.children.unlink(col)
 
 
-
 def save_blend_file(path):
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(
         consts.CURRENT_PATH,
@@ -122,3 +122,24 @@ def save_blend_file(path):
     ))
 
 
+
+def bpy_apply_transform(ob, location=True, rotation=True, scale=True):
+    ob.select_set(True)
+    bpy.ops.object.transform_apply(location=location, rotation=rotation, scale=scale)
+    return
+
+    # Below is a low level solution but is is broken
+    # as it doesn't handle rotations well
+
+    # transform the mesh using the matrix world
+    ob.data.transform(ob.matrix_world)
+    # then reset matrix to identity
+    ob.matrix_world = Matrix()
+
+
+def bpy_halign(objs):
+    bpy.ops.object.select_all(action='DESELECT')
+    for ob in objs:
+        ob.select_set(True)
+    bpy.ops.object.align(align_axis={"X", "Y", "Z"}, align_mode="OPT_1")
+    bpy.ops.object.select_all(action='DESELECT')
