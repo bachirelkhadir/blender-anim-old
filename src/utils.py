@@ -14,8 +14,8 @@ def get_blend_path():
     return os.path.dirname(os.path.dirname(file_path))
 
 def get_current_path():
-    """Path of the src/ directory."""
-    return Path(__file__).absolute().parent
+    """Path of the blender-anim library"""
+    return Path(__file__).absolute().parent.parent
 
 def create_folder_if_needed(path):
     if not os.path.exists(path):
