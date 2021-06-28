@@ -1,5 +1,6 @@
 import os
 import sys
+from pathlib import Path
 import bpy
 import bmesh
 from mathutils import Vector, Matrix
@@ -8,10 +9,13 @@ import argparse
 import subprocess as sp
 
 
-def get_current_path():
+def get_blend_path():
     file_path = bpy.data.filepath
     return os.path.dirname(os.path.dirname(file_path))
 
+def get_current_path():
+    """Path of the src/ directory"""
+    return Path(__file__).absolute()
 
 def create_folder_if_needed(path):
     if not os.path.exists(path):
