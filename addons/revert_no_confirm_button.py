@@ -22,7 +22,7 @@ class RevertNoConfirmOp(bpy.types.Operator):
 
 class RevertNoConfirmPanel(bpy.types.Panel):
     """Creates a Panel in the Object properties window"""
-    bl_label = "Rev (no confirm) 4"
+    bl_label = "Rev (no confirm)"
     bl_idname = "RENDER_PT_revertnoconfirm"
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
