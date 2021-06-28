@@ -16,7 +16,8 @@ def make_cube(loc, scale, name="Cube"):
     bm.free()
 
     basic_cube.location = loc
-    basic_cube.scale = scale
+    # mutlitply by [1, 1, 1] in case scale is a float
+    basic_cube.scale = scale * Vector([1, 1, 1])
 
     return basic_cube
 
