@@ -8,7 +8,7 @@ import bpy
 import logging
 from src.consts import *
 
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(level=logging.ERROR,
                     format="%(levelname)-5s: %(name)-9s | %(asctime)-15s | %(message)s")
 log = logging.getLogger(__name__)
 log.info(f"Paths: {EXTRA_PATHS} added to path")
@@ -37,8 +37,8 @@ if cmd_args.low_quality:
 
 
 
-def save_and_render(class_scene, start=None, end=None):
-    scene = class_scene(quality=quality)
+def save_and_render(class_scene, start=None, end=None, transparent=True):
+    scene = class_scene(quality=quality, transparent=transparent)
     scene.construct()
     class_name = class_scene.__name__
 

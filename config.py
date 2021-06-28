@@ -8,6 +8,6 @@ CONFIG = {
     'FFMPEG_BIN': "ffmpeg",
     'BLENDER_BIN': "blender",
     'XDG_OPEN': "open", # "xdg-open"
-    # 'ENGINE': 'BLENDER_EEVEE',
-    'ENGINE': 'BLENDER_WORKBENCH',
+    'ENGINE': 'BLENDER_EEVEE',
+    #'ENGINE': 'BLENDER_WORKBENCH',
     }

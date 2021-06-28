@@ -18,7 +18,7 @@ from src.color_list import *
 log = logging.getLogger(__name__)
 
 class Scene:
-    def __init__(self, quality='LOW'):
+    def __init__(self, quality='LOW', transparent=True):
         """
         quality: enum('LOW', 'MEDIUM', 'HIGH')
         """
@@ -29,6 +29,7 @@ class Scene:
         self.resolution = RESOLUTION_QUALITY[quality]
         self._setup_blender_collections()
         self._setup_timeline()
+        self._make_transparent(transparent)
 
         # by default, hide all objects in collection Assets
         self._hide_all_asset_objects()
@@ -46,18 +47,14 @@ class Scene:
         Make cube and add it the `Creation` collection
         """
         cube = basic_geometry.make_cube(loc, scale, name)
-        self.play(animations.Disappear(cube), start_frame=0)
-        self.collections["Creation"].objects.link(cube)
-        return cube
+        return self.add_bpy_object(cube)
 
     def add_plane(self, loc=Vector([0,0,0]), scale=Vector([1,1,1]), name="Plane"):
         """
         Make plane and add it the `Creation` collection
         """
         plane = basic_geometry.make_plane(loc, scale, name)
-        self.play(animations.Disappear(plane), start_frame=0)
-        self.collections["Creation"].objects.link(plane)
-        return plane
+        return self.add_bpy_object(plane)
 
     def add_line(self, start, end, thickness, name="Line"):
         """
@@ -66,9 +63,13 @@ class Scene:
         start = Vector(start)
         end = Vector(end)
         line = basic_geometry.make_line(start, end, thickness, name)
-        self.play(animations.Disappear(line), start_frame=0)
-        self.collections["Creation"].objects.link(line)
+        self.add_bpy_object(line)
         return line
+
+    def add_z_function_surface(self, exp_f="x**2 + y**2", name="Surf"):
+        surf = basic_geometry.make_z_function_surface(exp_f, name)
+        return self.add_bpy_object(surf)
+
 
     def add_3d_axis(self, thickness, name="3DAxis"):
         """
@@ -81,6 +82,11 @@ class Scene:
         for col, ax in zip(colors, axis_lines):
            color_bpy_object(ax, col)
         return VGroup(*axis_lines)
+
+    def add_bpy_object(self, obj):
+        self.play(animations.Disappear(obj), start_frame=0)
+        self.collections["Creation"].objects.link(obj)
+        return obj
 
     def duplicate_object(self, ob):
         copy = utils.deep_copy_object(ob)
@@ -230,6 +236,9 @@ class Scene:
     def _hide_all_asset_objects(self):
         for ob in bpy.data.collections["Assets"].objects:
             self.play(animations.Disappear(ob), start_frame=0)
+
+    def _make_transparent(self, transparent):
+        bpy.data.scenes["Scene"].render.film_transparent = transparent
 
     def print_scene_outline(self, include_unlinked=False):
         """

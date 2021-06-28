@@ -48,3 +48,14 @@ def make_line(start, end, thinkness, name="Line"):
 
 def make_sphere(center=Vector([0,0,0]), radius=1.):
     pass
+
+
+def make_z_function_surface(exp_f="x**2 + y**2", name="Surf"):
+    bpy.ops.mesh.primitive_z_function_surface(
+                        equation=exp_f,
+                        div_x=16,
+                        div_y=16,
+                        size_x=2,
+                        size_y=2)
+    surf = bpy.context.object
+    return surf
