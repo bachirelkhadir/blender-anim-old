@@ -21,7 +21,7 @@ TEX_USE_CTEX = False
 TEX_TEXT_TO_REPLACE = "YourTextHere"
 
 # DEFAULT values
-SVG_CLEANER_BIN = CONFIG.get("SVG_CLEANER_BIN", os.path.join(CURRENT_PATH, "../svgcleaner-bin/svgcleaner"))
+SVG_CLEANER_BIN = CONFIG.get("SVG_CLEANER_BIN", os.path.join(CURRENT_HelloWorldScenePATH, "../svgcleaner-bin/svgcleaner"))
 FFMPEG_BIN = CONFIG.get("FFMPEG_BIN", "ffmpeg")
 #BLENDER_BIN = "/Applications/Blender.app/Contents/MacOS/Blender" # "blender"
 BLENDER_BIN = CONFIG.get("BLENDER_BIN", "blender")
