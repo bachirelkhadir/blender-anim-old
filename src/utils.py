@@ -15,7 +15,7 @@ def get_blend_path():
 
 def get_current_path():
     """Path of the src/ directory."""
-    return Path(__file__).absolute().parent()
+    return Path(__file__).absolute().parent
 
 def create_folder_if_needed(path):
     if not os.path.exists(path):
