@@ -60,6 +60,11 @@ class Scene:
         """
         Make a line
         """
+        if hasattr(start, 'location')
+            start = start.location
+
+        if hasattr(end, 'location')
+            end = end.location
         start = Vector(start)
         end = Vector(end)
         line = basic_geometry.make_line(start, end, thickness, name)
