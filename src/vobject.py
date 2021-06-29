@@ -7,7 +7,7 @@ class VGroup:
 
     def get_children(self):
         # TODO: get children of children?
-        return self.children
+        return self.children.values()
 
     def __getitem__(self, key):
         if type(key) == str:
