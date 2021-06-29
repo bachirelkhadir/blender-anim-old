@@ -94,6 +94,11 @@ class Scene:
         self.collections["Creation"].objects.link(copy)
         return copy
 
+    def get_copy_of_asset(self, name):
+        ob = bpy.data.objects[name]
+        return self.duplicate_object(ob)
+
+
     def play(self, animation, duration=1, start_frame=None):
         end_frame = self.timeline.play_animation(animation, duration,
                                                  start_frame=start_frame)
