@@ -9,20 +9,17 @@ class VGroup:
         # TODO: get children of children?
         return self.children
 
-    def get_children_by_name(self):
-        return
-
     def __getitem__(self, key):
         if type(key) == str:
             return self.children[key]
         return self.children.values()[key]
 
     def shift(self, s):
-        for child in self.children:
+        for child in self.children.values():
             child.location += s
         return self
 
     def set_color(self, color):
-        for child in self.children:
+        for child in self.children.values():
             materials.color_bpy_object(child, color)
         return self
