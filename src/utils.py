@@ -72,9 +72,9 @@ def deep_copy_object(obj):
     copy = obj.copy()
     copy.data = obj.data.copy()
     copy.animation_data_clear()
-    if copy.data.shape_keys:
-        copy.data.shape_keys.animation_data_clear()
-    copy.modifiers.clear()
+    # if copy.data.shape_keys:
+    #     copy.data.shape_keys.animation_data_clear()
+    # copy.modifiers.clear()
     copy.active_material = obj.active_material.copy()
     return copy
 
