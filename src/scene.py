@@ -67,7 +67,7 @@ class Scene:
         return line
 
 
-    def add_sphere(self, center, radius)
+    def add_sphere(self, center, radius):
         sphere = basic_geometry.make_sphere(center=center, radius=radius)
         self.add_bpy_object(sphere)
         return sphere
