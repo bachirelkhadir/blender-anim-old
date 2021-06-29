@@ -121,6 +121,7 @@ def remove_bpy_collection(col):
 
 def save_blend_file(path):
 
+    logging.info(f"Saving blend file to {path}")
     bpy.ops.wm.save_as_mainfile(filepath=path)
     # bpy.ops.wm.save_as_mainfile(filepath=os.path.join(
     #     consts.CURRENT_PATH,
