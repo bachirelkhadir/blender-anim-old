@@ -8,3 +8,7 @@ class VGroup:
 
     def __getitem__(self, key):
         return self.children[key]
+
+    def shift(self, s):
+        for child in self.children:
+            child.location += s
