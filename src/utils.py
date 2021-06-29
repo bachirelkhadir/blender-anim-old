@@ -132,6 +132,7 @@ def save_blend_file(path):
 
 
 def bpy_apply_transform(ob, location=True, rotation=True, scale=True):
+    bpy.ops.object.select_all(action='DESELECT')
     ob.select_set(True)
     bpy.ops.object.transform_apply(location=location, rotation=rotation, scale=scale)
     return
