@@ -5,3 +5,6 @@ class VGroup:
     def get_children(self):
         # TODO: get children of children?
         return self.children
+
+    def __getitem__(self, key):
+        return self.children[key]
