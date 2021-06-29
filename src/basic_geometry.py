@@ -48,8 +48,13 @@ def make_line(start, end, thinkness, name="Line"):
 
 
 def make_sphere(center=Vector([0,0,0]), radius=1.):
-    pass
 
+    bpy.ops.mesh.primitive_uv_sphere_add(
+        radius=radius,
+        location=center
+    )
+    sphere = bpy.context.object
+    return sphere
 
 def make_z_function_surface(exp_f="x**2 + y**2", name="Surf"):
     bpy.ops.mesh.primitive_z_function_surface(
