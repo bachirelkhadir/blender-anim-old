@@ -15,11 +15,11 @@ class VGroup:
         return self.children.values()[key]
 
     def shift(self, s):
-        for child in self.children.values():
+        for child in self.get_children.values():
             child.location += s
         return self
 
     def set_color(self, color):
-        for child in self.children.values():
+        for child in self.get_children.values():
             materials.color_bpy_object(child, color)
         return self
