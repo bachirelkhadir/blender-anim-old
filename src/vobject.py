@@ -2,14 +2,20 @@ import src.materials as materials
 
 class VGroup:
     def __init__(self, *children):
-        self.children = children
+        names = locals().keys()
+        self.children = {name: child for name, child in zip(names, children)}
 
     def get_children(self):
         # TODO: get children of children?
         return self.children
 
+    def get_children_by_name(self):
+        return
+
     def __getitem__(self, key):
-        return self.children[key]
+        if type(key) == str:
+            return self.children[key]
+        return self.children.values()[key]
 
     def shift(self, s):
         for child in self.children:
