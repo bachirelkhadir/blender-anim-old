@@ -2,7 +2,7 @@ import src.materials as materials
 
 class VGroup:
     def __init__(self, *children, **named_children):
-        self.children = children + list(named_children.values())
+        self.children = [*children, *named_children.values()]
         self.named_children = named_children
 
     def get_children(self):
