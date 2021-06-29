@@ -20,6 +20,6 @@ class VGroup:
         return self
 
     def set_color(self, color):
-        for child in self.get_children.values():
+        for child in self.get_children():
             materials.color_bpy_object(child, color)
         return self
