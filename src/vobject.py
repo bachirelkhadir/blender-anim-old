@@ -11,6 +11,7 @@ class VGroup:
 
     def __getitem__(self, key):
         if type(key) == str:
+            print(self.children)
             return self.children[key]
         return self.children.values()[key]
 
