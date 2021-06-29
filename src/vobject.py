@@ -15,7 +15,7 @@ class VGroup:
         return self.children.values()[key]
 
     def shift(self, s):
-        for child in self.get_children.values():
+        for child in self.get_children():
             child.location += s
         return self
 
