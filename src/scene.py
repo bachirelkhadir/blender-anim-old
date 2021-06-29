@@ -60,10 +60,9 @@ class Scene:
         """
         Make a line
         """
-        if hasattr(start, 'location')
+        if hasattr(start, 'location'):
             start = start.location
-
-        if hasattr(end, 'location')
+        if hasattr(end, 'location'):
             end = end.location
         start = Vector(start)
         end = Vector(end)
