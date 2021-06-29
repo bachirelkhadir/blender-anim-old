@@ -149,19 +149,6 @@ class Disappear(Animation):
 
 
 
-class GrowSize(Animation):
-    """
-    source needs to be an object with a "size" shape key
-    """
-    def __init__(self, source):
-        self.sources = source.get_children() if isinstance(source, VGroup) else [source]
-        self.auxilary_objects = []
-
-    def register_animation_on_blender_timeline(self, start_frame, _):
-        for source in self.sources:
-            source.hide_render = 1
-            source.keyframe_insert(data_path="hide_render", frame=start_frame)
-        return start_frame
 
 class WrapInto(Animation):
     def __init__(self, source, target):
