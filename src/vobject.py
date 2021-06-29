@@ -1,7 +1,5 @@
 import src.materials as materials
 
-class NamedChildDoesntExistInVGroupError(Exception):
-    pass
 
 class VGroup:
     def __init__(self, *children, **named_children):
@@ -15,7 +13,7 @@ class VGroup:
     def __getitem__(self, key):
         if type(key) == str:
             if key not in self.named_children:
-                raise NamedChildDoesntExistInVGroupError
+                raise Exception(f"named child '{key}' doesn't exist in VGroup")
             return self.named_children[key]
         return self.children[key]
 
