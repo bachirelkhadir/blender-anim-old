@@ -1,3 +1,5 @@
+import src.materials as materials
+
 class VGroup:
     def __init__(self, *children):
         self.children = children
@@ -12,3 +14,7 @@ class VGroup:
     def shift(self, s):
         for child in self.children:
             child.location += s
+
+    def set_color(self, color):
+        for child in self.children:
+            materials.color_bpy_object(child, color)
