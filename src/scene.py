@@ -66,6 +66,12 @@ class Scene:
         self.add_bpy_object(line)
         return line
 
+
+    def add_sphere(self, center, radius)
+        sphere = basic_geometry.make_sphere(center=center, radius=radius)
+        self.add_bpy_object(sphere)
+        return sphere
+
     def add_z_function_surface(self, exp_f="x**2 + y**2", name="Surf"):
         surf = basic_geometry.make_z_function_surface(exp_f, name)
         return self.add_bpy_object(surf)
