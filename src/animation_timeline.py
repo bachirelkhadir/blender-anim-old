@@ -58,4 +58,4 @@ class AnimationTimeline:
         from src import animation_timeline_gantt_chart
         fig = animation_timeline_gantt_chart.outline_to_gantt(self._outline)
         # TODO: change path to something meaningful
-        fig.save("/tmp/animation_outline.png")
+        fig.savefig("/tmp/animation_outline.png")
