@@ -300,5 +300,5 @@ class InterpolateBetweenTransformations(Animation):
 class BringDown(InterpolateBetweenTransformations):
     def __init__(self, source):
         loc1 = OUT*3
-        loc2 = 0*loc2
+        loc2 = 0*loc1
         super().__init__(source, loc1, loc2)
