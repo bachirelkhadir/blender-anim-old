@@ -46,11 +46,13 @@ IN = -OUT
 
 
 
-FPS_QUALITY = {'LOW': 15, 'MEDIUM': 30, 'HIGH': 60, 'VERY_HIGH': 60}
+#FPS_QUALITY = {'LOW': 15, 'MEDIUM': 30, 'HIGH': 60, 'VERY_HIGH': 60}
 
-RESOLUTION_QUALITY = {'LOW': (1920//4, 1080//4), 'MEDIUM': (1920//2, 1080//2), 'HIGH': (1920, 1080),
-                      'VERY_HIGH': (1920*2, 1080*2)}
+#RESOLUTION_QUALITY = {'LOW': (1920//4, 1080//4), 'MEDIUM': (1920//2, 1080//2), 'HIGH': (1920, 1080),
+#                      'VERY_HIGH': (1920*2, 1080*2)}
+
 ENGINE =  CONFIG.get("ENGINE", 'BLENDER_EEVEE') # 'CYCLES'
+FPS = CONFIG.get("FPS", 60)
 #ENGINE =  "CYCLES"
 
 for path_dir in (ASSETS_DIR, TEX_DIR, OUTPUTS_DIR):
