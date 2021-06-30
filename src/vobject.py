@@ -22,7 +22,7 @@ class VGroup:
             child.location += s
         return self
 
-    def rotate(self, angle, around=OUT):
+    def rotate(self, angle, around):
         for child in self.get_children():
             child.rotation_euler = (Matrix.Rotation(angle, 3, around) *child.rotation_euler.to_matrix()).to_euler()
         return self
