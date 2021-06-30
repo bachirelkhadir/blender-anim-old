@@ -268,6 +268,9 @@ class AnimateShapeKey(Animation):
         shape_key.keyframe_insert(data_path="value", frame=end_frame)
         return end_frame
 
+    def __str__(self):
+        return f"AnimateShapeKey[{self.name}]"
+
 class InterpolateBetweenTransformations(Animation):
 
     def __init__(self, source, loc1=None, loc2=None, rot1=None, rot2=None):
