@@ -37,9 +37,6 @@ class AnimationTimeline:
         for ob in animation.auxilary_objects:
             self.anim_master_collection.objects.link(ob)
         for source in animation.sources:
-            if source.name not in self._outline:
-                self._outline[source.name] = []
-
             s = {
                 "name": source.name,
                  "animation": f"{animation}",
