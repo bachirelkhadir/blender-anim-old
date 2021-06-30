@@ -5,4 +5,4 @@ import pandas as pd
 
 def outline_to_gantt(outline):
     outline = pd.DataFrame(outline)
-    print(outline)
+    print(outline.head())
