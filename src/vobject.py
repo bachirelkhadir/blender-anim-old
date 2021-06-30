@@ -25,7 +25,6 @@ class VGroup:
     def rotate(self, angle, around=OUT):
         for child in self.get_children():
             child.rotation_euler = (Matrix.Rotation(angle, 3, around) *child.rotation_euler.to_matrix()).to_euler()
-            child.location += s
         return self
 
     def set_color(self, color):
