@@ -18,13 +18,11 @@ from src.color_list import *
 log = logging.getLogger(__name__)
 
 class Scene:
-    def __init__(self, quality='LOW', transparent=True):
-        """
-        quality: enum('LOW', 'MEDIUM', 'HIGH')
-        """
-        self.quality = quality 
-        self.fps = FPS_QUALITY[quality]
-        self.engine = ENGINE
+    def __init__(self, fps=None, engine=None, resolution=None, transparent=True):
+        self.fps = fps or FPS
+        self.engine = engine or ENGINE
+        self.resolution = resolution or RESOLUTION
+
         self.last_frame = 0
         self.resolution = RESOLUTION_QUALITY[quality]
         self._setup_blender_collections()
