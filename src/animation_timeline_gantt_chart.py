@@ -33,7 +33,7 @@ def outline_to_gantt(outline):
                       color="animation")
     fig.update_yaxes(autorange="reversed") # otherwise tasks are listed from the bottom up
     outline["start"] += 1
-    outline["end"] += 2
+    outline["end"] += 10
     outline['delta'] = outline['end'] - outline['start']
     print(outline.head())
     fig.layout.xaxis.type = 'linear'
