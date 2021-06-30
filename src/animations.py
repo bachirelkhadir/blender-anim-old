@@ -296,3 +296,9 @@ class InterpolateBetweenTransformations(Animation):
             source.keyframe_insert(data_path='rotation_euler', index=-1)
 
         return end_frame
+
+class BringDown(InterpolateBetweenTransformations):
+    def __init__(self, source):
+        loc1 = OUT*3
+        loc2 = 0*loc2
+        super().__init__(source, loc1, loc2)
