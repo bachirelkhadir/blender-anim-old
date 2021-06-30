@@ -24,7 +24,6 @@ class Scene:
         self.resolution = resolution or RESOLUTION
 
         self.last_frame = 0
-        self.resolution = RESOLUTION_QUALITY[quality]
         self._setup_blender_collections()
         self._setup_timeline()
         self._make_transparent(transparent)
