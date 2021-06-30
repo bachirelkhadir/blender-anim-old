@@ -1,5 +1,5 @@
+from mathutils import Matrix
 import src.materials as materials
-
 
 class VGroup:
     def __init__(self, *children, **named_children):
@@ -19,6 +19,12 @@ class VGroup:
 
     def shift(self, s):
         for child in self.get_children():
+            child.location += s
+        return self
+
+    def rotate(self, angle, around=OUT):
+        for child in self.get_children():
+            child.rotation_euler = (Matrix.Rotation(angle, 3, around) *child.rotation_euler.to_matrix()).to_euler()
             child.location += s
         return self
 
