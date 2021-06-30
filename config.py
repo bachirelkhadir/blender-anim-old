@@ -14,4 +14,3 @@ CONFIG = {
     #'ENGINE': 'BLENDER_WORKBENCH',
     #'ENGINE': 'CYCLES'
     }
-CONFIG["ENGINE"]  = "CYCLES"
