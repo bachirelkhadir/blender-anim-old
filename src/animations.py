@@ -277,10 +277,10 @@ class InterpolateBetweenTransformations(Animation):
     def register_animation_on_blender_timeline(self, start_frame, end_frame):
         for source in self.sources:
             bpy.context.scene.frame_set(start_frame)
-            source.location = loc1
+            source.location = self.loc1
             source.keyframe_insert(data_path='location', index=-1)
             bpy.context.scene.frame_set(end_frame)
-            source.location = loc2
+            source.location = self.loc2
             source.keyframe_insert(data_path='location', index=-1)
 
         return end_frame
