@@ -53,6 +53,7 @@ IN = -OUT
 
 ENGINE =  CONFIG.get("ENGINE", 'BLENDER_EEVEE') # 'CYCLES'
 FPS = CONFIG.get("FPS", 60)
+
 #ENGINE =  "CYCLES"
 
 for path_dir in (ASSETS_DIR, TEX_DIR, OUTPUTS_DIR):
