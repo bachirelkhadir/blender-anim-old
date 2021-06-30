@@ -47,13 +47,14 @@ def make_line(start, end, thinkness, name="Line"):
     return cylinder
 
 
-def make_sphere(center=Vector([0,0,0]), radius=1.):
+def make_sphere(center=Vector([0,0,0]), radius=1., name="Sphere"):
 
     bpy.ops.mesh.primitive_uv_sphere_add(
         radius=radius,
         location=center
     )
     sphere = bpy.context.object
+    sphere.name = name
     return sphere
 
 def make_z_function_surface(exp_f="x**2 + y**2", name="Surf"):
