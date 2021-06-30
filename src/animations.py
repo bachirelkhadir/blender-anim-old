@@ -302,3 +302,9 @@ class BringDown(InterpolateBetweenTransformations):
         loc1 = OUT*3
         loc2 = 0*loc1
         super().__init__(source, loc1, loc2)
+
+class BringUP(InterpolateBetweenTransformations):
+    def __init__(self, source):
+        loc1 = -OUT*3
+        loc2 = 0*loc1
+        super().__init__(source, loc1, loc2)
