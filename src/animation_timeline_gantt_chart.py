@@ -2,3 +2,6 @@
 
 import plotly.express as px
 import pandas as pd
+
+def outline_to_gantt(outline):
+    print(outline)
