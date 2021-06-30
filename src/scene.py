@@ -75,6 +75,8 @@ class Scene:
 
     def add_z_function_surface(self, exp_f="x**2 + y**2", name="Surf"):
         surf = basic_geometry.make_z_function_surface(exp_f, name)
+        # assign default color
+        color_bpy_object(surf, BABY_PINK)
         return self.add_bpy_object(surf)
 
 
@@ -107,7 +109,6 @@ class Scene:
         return VGroup(*lines).set_color(BABY_BLUE)
 
     def add_bpy_object(self, obj):
-        color_bpy_object(obj, BABY_PINK)
         self.play(animations.Disappear(obj), start_frame=0)
         self.collections["Creation"].objects.link(obj)
         return obj
