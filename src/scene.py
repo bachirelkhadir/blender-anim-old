@@ -287,4 +287,4 @@ class Scene:
         raise NotImplementedError
 
     def add(self, ob):
-        self.play(Appear(ob))
+        self.play(animations.Appear(ob))
