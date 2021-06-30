@@ -31,13 +31,6 @@ from src.color_list import *
 cmd_args = parse_cmd_arguments()
 log.info(cmd_args)
 
-quality = 'MEDIUM'
-if cmd_args.high_quality:
-    quality = 'HIGH'
-if cmd_args.low_quality:
-    quality = 'LOW'
-
-
 
 def save_and_render(class_scene, start=None, end=None, transparent=True, engine=None):
     scene = class_scene(quality=quality, transparent=transparent)
