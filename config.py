@@ -10,4 +10,5 @@ CONFIG = {
     'XDG_OPEN': "open", # "xdg-open"
     'ENGINE': 'BLENDER_EEVEE',
     #'ENGINE': 'BLENDER_WORKBENCH',
+    'ENGINE': 'CYCLES'
     }
