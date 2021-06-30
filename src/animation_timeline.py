@@ -40,8 +40,13 @@ class AnimationTimeline:
             if source.name not in self._outline:
                 self._outline[source.name] = []
 
-            s = (f"{animation}", start, end)
-            self._outline[source.name].append(s)
+            s = {
+                "name": source.name,
+                 "animation": f"{animation}",
+                 "start": start,
+                "end":
+                 end}
+            self._outline.append(s)
         if start_frame:
             return self._current_frame
         else:
