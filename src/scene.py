@@ -74,7 +74,7 @@ class Scene:
         return sphere
 
     def add_z_function_surface(self, exp_f="x**2 + y**2", name="Surf"):
-        surf = basic_geometry.make_z_function_surface(equation=exp_f,
+        surf = basic_geometry.make_z_function_surface(exp_f,
                                                       name,)
         # assign default color
         color_bpy_object(surf, BABY_PINK)
