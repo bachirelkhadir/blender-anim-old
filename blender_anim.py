@@ -8,7 +8,7 @@ import bpy
 import logging
 from src.consts import *
 
-# hack to set logging to debug level if the line "DEBUG = True" is
+# hack to set logging to debug level if the line "DEBUG = True" is present
 logging_level = logging.INFO if globals().get("DEBUG", False) else  logging.ERROR
 
 logging.basicConfig(level=logging_level,
