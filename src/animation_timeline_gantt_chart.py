@@ -19,7 +19,7 @@ def my_process_dataframe_timeline(args):
 
     # note that we are not adding any columns to the data frame here, so no risk of overwrite
     args["data_frame"][args["x_end"]] = (x_end - x_start)
-    args["x"] = args["x_end"]
+    args["x"] = args["x_end"] + 1
     del args["x_end"]
     args["base"] = args["x_start"]
     del args["x_start"]
