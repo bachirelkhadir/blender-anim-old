@@ -174,7 +174,7 @@ def tex_to_bpy(expression, tex_collection, template_tex_file_body=None):
     utils.bpy_apply_transform(parent, location=False, scale=True, rotation=False)
 
     # rename
-    parent.name = expression.strip("$")
+    parent.name = "tex_" + expression.strip("$")
 
     return parent
 
