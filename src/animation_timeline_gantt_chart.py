@@ -8,7 +8,7 @@ def outline_to_gantt(outline):
     fig = px.timeline(outline, x_start="start", x_end="end", y="name",
                       color="animation")
     fig.update_yaxes(autorange="reversed") # otherwise tasks are listed from the bottom up
-    outline['delta'] = 3 # (outline['end'] - outline['start']).astype(int)
+    outline['delta'] = outline['end'] - outline['start'] + 1
     fig.layout.xaxis.type = 'linear'
     fig.data[0].x = outline.delta.tolist()
     #fig = fig.full_figure_for_development(warn=False)
