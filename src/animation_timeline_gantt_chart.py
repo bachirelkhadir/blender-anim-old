@@ -4,6 +4,8 @@ import plotly.express as px
 import pandas as pd
 
 
+# https://stackoverflow.com/questions/66078893/plotly-express-timeline-for-gantt-chart-with-integer-xaxis
+
 def my_process_dataframe_timeline(args):
     """
     Massage input for bar traces for px.timeline()
@@ -33,7 +35,7 @@ def outline_to_gantt(outline):
     fig.update_yaxes(autorange="reversed") # otherwise tasks are listed from the bottom up
     outline['delta'] = outline['end'] - outline['start'] + 1
     fig.layout.xaxis.type = 'linear'
-    fig.data[0].x = outline.delta.tolist()
+    #fig.data[0].x = outline.delta.tolist()
     #fig = fig.full_figure_for_development(warn=False)
     print(outline.tail())
     return fig
