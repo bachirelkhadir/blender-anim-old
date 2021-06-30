@@ -269,7 +269,6 @@ class InterpolateBetweenTransformations(Animation):
 
     def __init__(self, source, loc1, loc2):
         self.sources = source.get_children() if isinstance(source, VGroup) else [source]
-        self.delta = delta
         self.auxilary_objects = []
         self.loc1 = loc1
         self.loc2 = loc2
