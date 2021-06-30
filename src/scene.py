@@ -285,3 +285,6 @@ class Scene:
 
     def construct(self):
         raise NotImplementedError
+
+    def add(self, ob):
+        self.play(Appear(ob))
