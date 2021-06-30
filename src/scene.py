@@ -90,6 +90,21 @@ class Scene:
            color_bpy_object(ax, col)
         return VGroup(*axis_lines)
 
+    def add_number_plane(self, plane="XZ"):
+        basis = {
+            "XZ": (RIGHT, OUT),
+            "XY": (RIGHT, UP),
+            "YZ": (UP, OUT),
+        }
+        basis = basis[plane]
+        for b1, b2 in [basis, reversed(basis)]:
+            for x in range(-10, 10):
+                start = x * b1 + 10*b2
+                end = x * b1 - 10*b2
+                line = self.add_line(start, end, 0.01 if x != 0 else 0.05)
+                VGroup(line).set_color(BABY_BLUE)
+                self.play(Appear(line))
+
     def add_bpy_object(self, obj):
         self.play(animations.Disappear(obj), start_frame=0)
         self.collections["Creation"].objects.link(obj)
