@@ -37,7 +37,7 @@ if cmd_args.low_quality:
 
 
 
-def save_and_render(class_scene, start=None, end=None, transparent=True):
+def save_and_render(class_scene, start=None, end=None, transparent=True, engine=None):
     scene = class_scene(quality=quality, transparent=transparent)
     scene.construct()
     class_name = class_scene.__name__
