@@ -3,6 +3,29 @@
 import plotly.express as px
 import pandas as pd
 
+
+def my_process_dataframe_timeline(args):
+    """
+    Massage input for bar traces for px.timeline()
+    """
+    print("my method")
+    args["is_timeline"] = True
+    if args["x_start"] is None or args["x_end"] is None:
+        raise ValueError("Both x_start and x_end are required")
+
+    x_start = args["data_frame"][args["x_start"]]
+    x_end = args["data_frame"][args["x_end"]]
+
+    # note that we are not adding any columns to the data frame here, so no risk of overwrite
+    args["data_frame"][args["x_end"]] = (x_end - x_start)
+    args["x"] = args["x_end"]
+    del args["x_end"]
+    args["base"] = args["x_start"]
+    del args["x_start"]
+    return args
+px._core.process_dataframe_timeline = my_process_dataframe_timeline
+
+
 def outline_to_gantt(outline):
     outline = pd.DataFrame(outline)
     fig = px.timeline(outline, x_start="start", x_end="end", y="name",
