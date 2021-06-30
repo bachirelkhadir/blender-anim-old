@@ -10,7 +10,6 @@ def my_process_dataframe_timeline(args):
     """
     Massage input for bar traces for px.timeline()
     """
-    print("my method")
     args["is_timeline"] = True
     if args["x_start"] is None or args["x_end"] is None:
         raise ValueError("Both x_start and x_end are required")
