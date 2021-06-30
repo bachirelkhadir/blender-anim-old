@@ -11,6 +11,6 @@ def outline_to_gantt(outline):
     outline['delta'] = outline['end'] - outline['start']
     fig.layout.xaxis.type = 'linear'
     fig.data[0].x = outline.delta.tolist()
-    fig = fig.full_figure_for_development(warn=False)
+    #fig = fig.full_figure_for_development(warn=False)
     print(outline.tail())
     return fig
