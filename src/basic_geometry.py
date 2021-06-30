@@ -60,9 +60,10 @@ def make_sphere(center=Vector([0,0,0]), radius=1., name="Sphere"):
 def make_z_function_surface(exp_f="x**2 + y**2", name="Surf"):
     bpy.ops.mesh.primitive_z_function_surface(
                         equation=exp_f,
-                        div_x=16,
-                        div_y=16,
+                        div_x=64,
+                        div_y=64,
                         size_x=2,
-                        size_y=2)
+                        size_y=2,)
     surf = bpy.context.object
+    surf.name = name
     return surf
