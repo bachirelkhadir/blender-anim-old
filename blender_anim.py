@@ -10,6 +10,7 @@ from src.consts import *
 
 # hack to set logging to debug level if the line "DEBUG = True" is present
 logging_level = logging.INFO if globals().get("DEBUG", False) else  logging.ERROR
+print("LOGGING level:", logging_level)
 
 logging.basicConfig(level=logging_level,
                     format="%(levelname)-5s: %(name)-9s | %(asctime)-15s | %(message)s")
