@@ -54,7 +54,6 @@ def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
                                                        class_name,
                                                        ))
 
-    sys.exit()
 
 
 def RADIANS(deg):
