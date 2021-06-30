@@ -41,9 +41,9 @@ class AnimationTimeline:
                 self._outline[source.name] = []
 
             if start == end:
-                s = f"{type(animation).__name__}({start})"
+                s = f"{animation}({start})"
             else:
-                s = f"{type(animation).__name__}({start}, {end})"
+                s = f"{animation}({start}, {end})"
             self._outline[source.name].append(s)
         if start_frame:
             return self._current_frame
