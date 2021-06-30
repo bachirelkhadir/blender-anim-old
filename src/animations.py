@@ -269,7 +269,7 @@ class AnimateShapeKey(Animation):
         return end_frame
 
     def __str__(self):
-        return f"AnimateShapeKey[{self.name}]"
+        return f"AnimateShapeKey[{self.key_name}]"
 
 class InterpolateBetweenTransformations(Animation):
 
