@@ -267,14 +267,14 @@ class AnimateShapeKey(Animation):
 
 class InterpolateBetweenTransformations(Animation):
 
-    def __init__(self, source, loc1, loc2, rot1, rot2):
+    def __init__(self, source, loc1=None, loc2=None, rot1=None, rot2=None):
         self.sources = source.get_children() if isinstance(source, VGroup) else [source]
         self.auxilary_objects = []
-        self.loc1 = loc1
-        self.loc2 = loc2
+        self.loc1 = loc1 if loc1 else self.sources[0].location
+        self.loc2 = loc2 if loc2 else self.sources[0].location
 
-        self.rot1 = rot1
-        self.rot2 = rot2
+        self.rot1 = rot1 if rot1 else self.sources[0].rotation_euler
+        self.rot2 = rot1 if rot1 else self.sources[0].rotation_euler
 
     def register_animation_on_blender_timeline(self, start_frame, end_frame):
         for source in self.sources:
