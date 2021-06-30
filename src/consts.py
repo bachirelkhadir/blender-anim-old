@@ -44,7 +44,7 @@ LEFT = -RIGHT
 DOWN = -UP
 IN = -OUT
 ZERO = 0*UP
-ONE = Vector)[1, 1, 1])
+ONE = Vector([1, 1, 1])
 
 
 
