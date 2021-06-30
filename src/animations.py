@@ -120,7 +120,6 @@ class Scale(BasicTransformation):
 
 
         keyframe_insert_all()
-        print("Sacling...")
         return end_frame
 
 class Appear(Animation):
