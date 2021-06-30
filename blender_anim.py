@@ -33,7 +33,6 @@ log.info(cmd_args)
 
 
 def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
-    print(scene_kwargs, class_scene)
     scene = class_scene(**scene_kwargs)
     scene.construct()
     class_name = class_scene.__name__
