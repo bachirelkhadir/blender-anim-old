@@ -8,7 +8,7 @@ import bpy
 import logging
 from src.consts import *
 
-logging_level = logging.INFO if has_imported("somemodule") else  logging.ERROR
+logging_level = logging.INFO
 
 logging.basicConfig(level=logging_level,
                     format="%(levelname)-5s: %(name)-9s | %(asctime)-15s | %(message)s")
