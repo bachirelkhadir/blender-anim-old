@@ -56,5 +56,6 @@ class AnimationTimeline:
 
 
     def print_outline(self):
+        from .src import animation_timeline_gantt_chart
         for ob, animation_list in self._outline.items():
             print(ob, ":", "->".join(animation_list))
