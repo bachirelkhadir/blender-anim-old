@@ -107,6 +107,7 @@ class Scene:
         return VGroup(*lines).set_color(BABY_BLUE)
 
     def add_bpy_object(self, obj):
+        color_bpy_object(obj, BABY_PINK)
         self.play(animations.Disappear(obj), start_frame=0)
         self.collections["Creation"].objects.link(obj)
         return obj
