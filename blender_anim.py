@@ -8,7 +8,9 @@ import bpy
 import logging
 from src.consts import *
 
-logging.basicConfig(level=logging.ERROR,
+logging_level =logging.INFO if has_imported("somemodule") else  logging.ERROR
+
+logging.basicConfig(level=logging_level,
                     format="%(levelname)-5s: %(name)-9s | %(asctime)-15s | %(message)s")
 log = logging.getLogger(__name__)
 log.info(f"Paths: {EXTRA_PATHS} added to path")
