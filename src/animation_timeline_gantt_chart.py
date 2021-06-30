@@ -28,7 +28,7 @@ px._core.process_dataframe_timeline = my_process_dataframe_timeline
 
 
 def outline_to_gantt(outline):
-    outline = pd.DataFrame(outline)
+    outline = pd.DataFrame(outline).sorted_by("name")
 
     #outline["start"] += 1
     outline["end"] += 1
