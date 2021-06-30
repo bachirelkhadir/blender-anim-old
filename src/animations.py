@@ -17,6 +17,9 @@ class Animation:
     def register_animation_on_blender_timeline(self, start_frame, end_frame):
         raise NotImplementedError
 
+    def __str__(self):
+        return type(self).__name__
+
 
 
 # Basic transformations: Translate, Rotate, Scale
