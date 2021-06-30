@@ -31,7 +31,7 @@ def outline_to_gantt(outline):
     outline = pd.DataFrame(outline)
 
     #outline["start"] += 1
-    #outline["end"] += 1
+    outline["end"] += 1
     outline['delta'] = outline['end'] - outline['start']+1
     fig = px.timeline(outline, x_start="start", x_end="end", y="name",
                       color="animation")
