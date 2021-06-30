@@ -19,7 +19,6 @@ log = logging.getLogger(__name__)
 
 class Scene:
     def __init__(self, fps=None, engine=None, resolution=None, transparent=True):
-        print("SCNE -. engine,", engine)
         self.fps = fps or FPS
         self.engine = engine or ENGINE
         self.resolution = resolution or RESOLUTION
