@@ -15,7 +15,7 @@ or in Linux:
 
 ```
 /snap/blender/161/2.93/python/bin/python3.9 -m ensurepip
-/snap/blender/161/2.93/python/bin/python3.9  -m pip install -U tqdm pyaml plotly
+/snap/blender/161/2.93/python/bin/python3.9  -m pip install -U tqdm pyaml plotly pandas
 ```
 make sure local site-packages is in path
 
