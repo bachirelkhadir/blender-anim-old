@@ -43,6 +43,8 @@ OUT = Vector([0, 0, 1])
 LEFT = -RIGHT
 DOWN = -UP
 IN = -OUT
+ZERO = 0*UP
+ONE = Vector)[1, 1, 1])
 
 
 
