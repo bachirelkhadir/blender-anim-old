@@ -19,7 +19,7 @@ class AnimationTimeline:
         self._current_frame = 1
         self.anim_master_collection = anim_master_col
 
-        self._outline = {} # for debug puposes
+        self._outline = []
 
     def wait(self, duration):
         self._current_frame += self._duration_to_number_frames(duration)
