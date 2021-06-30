@@ -97,13 +97,15 @@ class Scene:
             "YZ": (UP, OUT),
         }
         basis = basis[plane]
+        lines = []
         for b1, b2 in [basis, reversed(basis)]:
             for x in range(-10, 10):
                 start = x * b1 + 10*b2
                 end = x * b1 - 10*b2
                 line = self.add_line(start, end, 0.01 if x != 0 else 0.05)
                 VGroup(line).set_color(BABY_BLUE)
-                self.play(Appear(line))
+                lines.append(line)
+        return VGroup(*lines)
 
     def add_bpy_object(self, obj):
         self.play(animations.Disappear(obj), start_frame=0)
