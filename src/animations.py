@@ -70,9 +70,10 @@ class Translate(BasicTransformation):
         bpy.context.scene.frame_set(start_frame)
         keyframe_insert_all()
 
-        # Select all
+        bpy.context.scene.frame_set(end_frame)
         self.sources.shift(self.delta)
         keyframe_insert_all()
+
         return end_frame
 
 
