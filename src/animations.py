@@ -68,6 +68,7 @@ class Translate(BasicTransformation):
                     source.keyframe_insert(data_path=data_path, index=-1)
 
         bpy.context.scene.frame_set(start_frame)
+        print(sources[0].name, sources[0].location, start_frame )
         keyframe_insert_all()
 
         # Select all
@@ -90,6 +91,7 @@ class Translate(BasicTransformation):
                                     use_proportional_connected=False,
                                     use_proportional_projected=False)
 
+        print(sources[0].name, sources[0].location, end_frame )
 
         keyframe_insert_all()
         return end_frame
