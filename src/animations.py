@@ -26,7 +26,7 @@ class Animation:
 # TOD: for now, basic transformation cannot overlap with each other
 class BasicTransformation(Animation):
     def __init__(self, source, delta, name_transformation='location'):
-        self.sources = source.get_children() if isinstance(source, VGroup) else [source]
+        self.sources = source if isinstance(source, VGroup) else VGroup(source)
         self.delta = delta
         self.name_transformation = name_transformation
         self.auxilary_objects = []
