@@ -72,27 +72,8 @@ class Translate(BasicTransformation):
         keyframe_insert_all()
 
         # Select all
-        bpy.ops.object.select_all(action='DESELECT')
-        bpy.context.view_layer.objects.active = self.sources[0]
-        for source in self.sources:
-            source.select_set(state=True)
-
-        bpy.context.scene.frame_set(end_frame)
-
-        # resize all objects using ops
-        # bpy.ops.transform.resize(value=self.delta)
-        bpy.ops.transform.translate(value=self.delta, orient_type='GLOBAL',
-                                    orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0,
-                                                                          1)),
-                                    orient_matrix_type='GLOBAL',
-                                    mirror=True, use_proportional_edit=False,
-                                    proportional_edit_falloff='SMOOTH',
-                                    proportional_size=1,
-                                    use_proportional_connected=False,
-                                    use_proportional_projected=False)
-
+        self.sources.shift(self.delta)
         print(self.sources[0].name, self.sources[0].location, end_frame )
-
         keyframe_insert_all()
         return end_frame
 
