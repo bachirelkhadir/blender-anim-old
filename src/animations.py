@@ -68,12 +68,10 @@ class Translate(BasicTransformation):
                     source.keyframe_insert(data_path=data_path, index=-1)
 
         bpy.context.scene.frame_set(start_frame)
-        print(self.sources[0].name, self.sources[0].location, start_frame )
         keyframe_insert_all()
 
         # Select all
         self.sources.shift(self.delta)
-        print(self.sources[0].name, self.sources[0].location, end_frame )
         keyframe_insert_all()
         return end_frame
 
