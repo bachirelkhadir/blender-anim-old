@@ -43,7 +43,7 @@ def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
     save_blend_file(os.path.join(destination, f"{class_name}.blend"))
 
     if start is None or end is None:
-        start, end = map(int, cmd_args.start_end_frame.split(','))
+        start, end = 1, scene.last_frame
     log.info(f"Start @ frame {start} and end @ {end}")
 
     if cmd_args.render_pngs:
