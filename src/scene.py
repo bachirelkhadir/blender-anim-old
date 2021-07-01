@@ -288,3 +288,6 @@ class Scene:
 
     def add(self, ob):
         self.play(animations.Appear(ob))
+
+    def remove(self, ob):
+        self.play(animations.Disappear(ob))
