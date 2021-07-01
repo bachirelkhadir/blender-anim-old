@@ -169,7 +169,7 @@ class Scene:
 
         log.info(f"Rendering to {get_filename(0)}")
 
-        bar = trange(start, end, 1, desc="Rendering frame")
+        bar = trange(start, end, 1, desc=f"Rendering frame ({start}->{end})")
         for frame_number in bar:
             render_path = get_filename(frame_number)
             bpy.context.scene.render.filepath = render_path
