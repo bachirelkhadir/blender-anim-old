@@ -42,8 +42,10 @@ def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
     utils.create_folder_if_needed(destination)
     save_blend_file(os.path.join(destination, f"{class_name}.blend"))
 
-    if start is None or end is None:
-        start, end = 1, scene.last_frame
+    if start is None:
+        start = 1
+    if  end is None:
+        end = scene.last_frame
     log.info(f"Start @ frame {start} and end @ {end}")
 
     if cmd_args.render_pngs:
