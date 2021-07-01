@@ -289,5 +289,6 @@ class Scene:
     def add(self, ob):
         self.play(animations.Appear(ob))
 
-    def remove(self, ob):
-        self.play(animations.Disappear(ob))
+    def remove(self, *obs):
+        for ob in obs:
+            self.play(animations.Disappear(ob))
