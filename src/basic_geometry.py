@@ -39,6 +39,11 @@ def make_line(start, end, thinkness, name="Line"):
         location=center
     )
     cylinder = bpy.context.object
+
+
+    # add shape key to control the end point
+
+
     phi = math.atan2(dy, dx)
     theta = math.acos(dz/dist)
 
