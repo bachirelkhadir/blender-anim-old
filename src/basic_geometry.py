@@ -49,7 +49,6 @@ def make_line(start, end, thinkness, name="Line"):
     for i in range(len(verts)):
         verts[i].co.z = -1
 
-
     phi = math.atan2(dy, dx)
     theta = math.acos(dz/dist)
 
