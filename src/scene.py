@@ -44,6 +44,8 @@ class Scene:
         Make cube and add it the `Creation` collection
         """
         cube = basic_geometry.make_cube(loc, scale, name)
+        # default color for debuggin
+        color_bpy_object(cube, BABY_BLUE)
         return self.add_bpy_object(cube)
 
     def add_plane(self, loc=Vector([0,0,0]), scale=Vector([1,1,1]), name="Plane"):
