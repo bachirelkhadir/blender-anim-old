@@ -45,6 +45,11 @@ def make_line(start, end, thinkness, name="Line"):
     verts = obj.data.vertices
 
     sk_basis = cylinder.shape_key_add('Basis')
+    sk_size= cylinder.shape_key_add('inv_size')
+    # lower the vertices
+    verts = sk_size.data
+    for i in range(len(verts)):
+        vertes[i].co.z += 1
 
 
     phi = math.atan2(dy, dx)
