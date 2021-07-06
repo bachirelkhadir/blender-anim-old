@@ -140,6 +140,7 @@ class Disappear(Animation):
 
 class WrapInto(Animation):
     def __init__(self, source, target):
+        self.sources = VGroup(source)
         self.source = source
         self.target = target
         self.auxilary_objects = []
