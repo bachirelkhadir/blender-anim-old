@@ -80,7 +80,7 @@ class Scene:
         return self.add_bpy_object(surf)
 
 
-    def add_3d_axis(self, thickness, name="3DAxis"):
+    def add_3d_axis(self, thickness.1, name="3DAxis"):
         """
         Make a 3D axis
         """
