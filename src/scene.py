@@ -90,7 +90,9 @@ class Scene:
         colors = [ RED, BLUE, GREEN ]
         for col, ax in zip(colors, axis_lines):
            color_bpy_object(ax, col)
-        return VGroup(*axis_lines)
+        axes = VGroup(*axis_lines)
+        self.add(axes)
+        return axes
 
     def add_number_plane(self, plane="XZ"):
         basis = {
