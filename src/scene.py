@@ -53,6 +53,8 @@ class Scene:
         Make plane and add it the `Creation` collection
         """
         plane = basic_geometry.make_plane(loc, scale, name)
+
+        color_bpy_object(cube, BABY_YELLOW)
         return self.add_bpy_object(plane)
 
     def add_line(self, start, end, thickness, name="Line"):
