@@ -42,8 +42,6 @@ def make_line(start, end, thinkness, name="Line"):
 
 
     # add shape key to animate the end point of the line
-    verts = obj.data.vertices
-
     sk_basis = cylinder.shape_key_add('Basis')
     sk_size= cylinder.shape_key_add('inv_size')
     # lower the vertices
