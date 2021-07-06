@@ -41,7 +41,10 @@ def make_line(start, end, thinkness, name="Line"):
     cylinder = bpy.context.object
 
 
-    # add shape key to control the end point
+    # add shape key to animate the end point of the line
+    verts = obj.data.vertices
+
+    sk_basis = cylinder.shape_key_add('Basis')
 
 
     phi = math.atan2(dy, dx)
