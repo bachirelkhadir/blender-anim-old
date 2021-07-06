@@ -47,7 +47,7 @@ def make_line(start, end, thinkness, name="Line"):
     # lower the vertices
     verts = sk_size.data
     for i in range(len(verts)):
-        verts[i].co.z += 1
+        verts[i].co.z = -1
 
 
     phi = math.atan2(dy, dx)
