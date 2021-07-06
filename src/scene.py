@@ -73,6 +73,8 @@ class Scene:
     def add_sphere(self, center=Vector([0, 0, 0]), radius=1., name="Sphere"):
         sphere = basic_geometry.make_sphere(center=center, radius=radius, name=name)
         self.add_bpy_object(sphere)
+        # default color for debuggin
+        color_bpy_object(sphere, BABY_PINK)
         return sphere
 
     def add_z_function_surface(self, exp_f="x**2 + y**2", name="Surf"):
