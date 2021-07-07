@@ -267,7 +267,7 @@ class InterpolateBetweenTransformations(Animation):
         self.loc2 = loc2 if loc2 else self.sources[0].location
 
         self.rot1 = rot1 if rot1 else self.sources[0].rotation_euler
-        self.rot2 = rot1 if rot1 else self.sources[0].rotation_euler
+        self.rot2 = rot2 if rot2 else self.sources[0].rotation_euler
 
     def register_animation_on_blender_timeline(self, start_frame, end_frame):
         for source in self.sources:
