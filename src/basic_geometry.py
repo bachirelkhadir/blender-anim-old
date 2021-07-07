@@ -57,11 +57,12 @@ def make_line(start, end, thinkness, name="Line"):
     return cylinder
 
 
-def make_sphere(center=Vector([0,0,0]), radius=1., name="Sphere"):
+def make_sphere(center=Vector([0,0,0]), radius=1., name="Sphere", **kwargs):
 
     bpy.ops.mesh.primitive_uv_sphere_add(
         radius=radius,
-        location=center
+        location=center,
+        **kwargs
     )
     sphere = bpy.context.object
     sphere.name = name
