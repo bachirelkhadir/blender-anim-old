@@ -71,8 +71,8 @@ class Scene:
         return line
 
 
-    def add_sphere(self, center=Vector([0, 0, 0]), radius=1., name="Sphere"):
-        sphere = basic_geometry.make_sphere(center=center, radius=radius, name=name)
+    def add_sphere(self, center=Vector([0, 0, 0]), radius=1., name="Sphere", **kwargs):
+        sphere = basic_geometry.make_sphere(center=center, radius=radius, name=name, **kwargs)
         self.add_bpy_object(sphere)
         # default color for debuggin
         color_bpy_object(sphere, BABY_PINK)
