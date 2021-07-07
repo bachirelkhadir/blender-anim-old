@@ -64,6 +64,7 @@ def make_sphere(center=Vector([0,0,0]), radius=1., name="Sphere", **kwargs):
         location=center,
         **kwargs
     )
+    print(**kwargs)
     sphere = bpy.context.object
     sphere.name = name
     return sphere
