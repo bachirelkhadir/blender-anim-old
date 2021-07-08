@@ -41,3 +41,4 @@ class VGroup:
         if hasattr(point, 'location'):
             point = point.location
         self.location = point
+        return self
