@@ -40,5 +40,6 @@ class VGroup:
     def move_to(self, point):
         if hasattr(point, 'location'):
             point = point.location
-        self.location = point
+        for child in self.get_children():
+            self.location = point
         return self
