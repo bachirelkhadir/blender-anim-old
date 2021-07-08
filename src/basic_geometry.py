@@ -35,7 +35,6 @@ def make_line(start, end, thinkness, name="Line"):
     # collection
     bpy.ops.mesh.primitive_cylinder_add(
         radius=thinkness,
-        depth=dist,
     )
     cylinder = bpy.context.object
 
