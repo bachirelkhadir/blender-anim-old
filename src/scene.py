@@ -72,6 +72,7 @@ class Scene:
         end = Vector(end)
         line = basic_geometry.make_line(start, end, thickness, name)
         self.add_bpy_object(line)
+        color_bpy_object(line, WHITE)
         return line
 
 
