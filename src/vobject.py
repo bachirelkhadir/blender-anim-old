@@ -50,3 +50,8 @@ class VGroup:
         for child in self.get_children():
             child.location = point + buff * dir
         return self
+
+    def get_center(self):
+        centers = [c.location for c in self.get_children()]
+        # hack to take mean of vectors
+        return sum(centers[1:], centers[0]) / len(centers)
