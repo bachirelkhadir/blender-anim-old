@@ -38,6 +38,8 @@ class VGroup:
         return self
 
     def move_to(self, point):
+        if type(point) == VGroup:
+            point = point.get_center()
         if hasattr(point, 'location'):
             point = point.location
         for child in self.get_children():
