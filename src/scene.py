@@ -56,7 +56,7 @@ class Scene:
         color_bpy_object(plane, BABY_YELLOW)
         return self.add_bpy_object(plane)
 
-    def add_line(self, start, end, thickness=.1, name="Line"):
+    def add_line(self, start, end, thickness=.01, name="Line"):
         """
         Make a line
         """
