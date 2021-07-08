@@ -43,3 +43,10 @@ class VGroup:
         for child in self.get_children():
             child.location = point
         return self
+
+    def next_to(self, point, dir=RIGHT, buff=.5):
+        if hasattr(point, 'location'):
+            point = point.location
+        for child in self.get_children():
+            child.location = point + buff * dir
+        return self
