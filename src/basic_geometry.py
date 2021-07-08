@@ -50,8 +50,8 @@ def make_line(start, end, thinkness, name="Line"):
     phi = math.atan2(dy, dx)
     theta = math.acos(dz/dist)
 
-    cylinder.location = center
     cylinder.scale[-1] *= dist
+    cylinder.location = center
     cylinder.rotation_euler[1] = theta
     cylinder.rotation_euler[2] = phi
     return cylinder
