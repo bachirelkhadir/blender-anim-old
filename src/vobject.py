@@ -45,8 +45,11 @@ class VGroup:
         return self
 
     def next_to(self, point, dir=Vector([0, 0, 0]), buff=.5):
+        if type(point) == VGroup:
+            point = point.get_center()
         if hasattr(point, 'location'):
             point = point.location
+
         for child in self.get_children():
             child.location = point + buff * dir
         return self
