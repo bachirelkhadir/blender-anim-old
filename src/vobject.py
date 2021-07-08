@@ -60,3 +60,7 @@ class VGroup:
         centers = [c.location for c in self.get_children()]
         # hack to take mean of vectors
         return sum(centers[1:], centers[0]) / len(centers)
+
+    @attriubte
+    def location(self):
+        return self.get_center()
