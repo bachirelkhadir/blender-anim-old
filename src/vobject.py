@@ -41,5 +41,5 @@ class VGroup:
         if hasattr(point, 'location'):
             point = point.location
         for child in self.get_children():
-            self.location = point
+            child.location = point
         return self
