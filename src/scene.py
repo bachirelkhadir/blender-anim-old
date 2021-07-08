@@ -60,6 +60,10 @@ class Scene:
         """
         Make a line
         """
+        if type(start) == VGroup:
+            start = start.get_center()
+        if type(end) == VGroup:
+            end = end.get_center()
         if hasattr(start, 'location'):
             start = start.location
         if hasattr(end, 'location'):
