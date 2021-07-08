@@ -36,3 +36,8 @@ class VGroup:
         for child in self.get_children():
             materials.color_bpy_object(child, color)
         return self
+
+    def move_to(self, point):
+        if hasattr(point, 'location'):
+            point = point.location
+        self.location = point
