@@ -44,7 +44,7 @@ class VGroup:
             child.location = point
         return self
 
-    def next_to(self, point, dir=RIGHT, buff=.5):
+    def next_to(self, point, dir=VECTOR([0, 0, 0]), buff=.5):
         if hasattr(point, 'location'):
             point = point.location
         for child in self.get_children():
