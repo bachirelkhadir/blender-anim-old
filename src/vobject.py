@@ -61,6 +61,6 @@ class VGroup:
         # hack to take mean of vectors
         return sum(centers[1:], centers[0]) / len(centers)
 
-    @attriubte
+    @property
     def location(self):
         return self.get_center()
