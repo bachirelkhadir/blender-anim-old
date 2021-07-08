@@ -1,4 +1,4 @@
-from mathutils import Matrix
+from mathutils import Matrix, Vector
 import src.materials as materials
 
 class VGroup:
