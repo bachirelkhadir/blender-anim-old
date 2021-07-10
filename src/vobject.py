@@ -19,7 +19,10 @@ class VGroup:
 
     def shift(self, s):
         for child in self.get_children():
-            child.location += s
+            if type(child) == VGroup:
+                child.shift(s)
+            else:
+                child.location += s
         return self
 
     def scale(self, s):
