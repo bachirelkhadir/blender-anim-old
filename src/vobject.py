@@ -3,7 +3,16 @@ import src.materials as materials
 
 class VGroup:
     def __init__(self, *children, **named_children):
-        self.children = [*children, *named_children.values()]
+        children = [*children, *named_children.values()]
+
+        # get children of children:
+        self.children = []
+        for child in children:
+            if type(child) == VGroup:
+                self.children.extend(child.get_children())
+            else:
+                self.children.append(child)
+
         self.named_children = named_children
 
     def get_children(self):
@@ -19,10 +28,7 @@ class VGroup:
 
     def shift(self, s):
         for child in self.get_children():
-            if type(child) == VGroup:
-                child.shift(s)
-            else:
-                child.location += s
+            child.location += s
         return self
 
     def scale(self, s):
@@ -37,10 +43,7 @@ class VGroup:
 
     def set_color(self, color):
         for child in self.get_children():
-            if type(child) == VGroup:
-                child.set_color(color)
-            else:
-                materials.color_bpy_object(child, color)
+            materials.color_bpy_object(child, color)
         return self
 
     def move_to(self, point):
