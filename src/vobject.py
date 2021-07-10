@@ -34,7 +34,10 @@ class VGroup:
 
     def set_color(self, color):
         for child in self.get_children():
-            materials.color_bpy_object(child, color)
+            if type(child) == VGroup:
+                child.set_color(color)
+            else:
+                materials.color_bpy_object(child, color)
         return self
 
     def move_to(self, point):
