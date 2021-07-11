@@ -146,7 +146,10 @@ class WrapInto(Animation):
         else:
             self.sources = VGroup(source)
             self.source = source
-        self.target = target
+        if type(target) == VGroup:
+            self.target = target[0]
+        else:
+            self.target = target
         self.auxilary_objects = []
 
 
