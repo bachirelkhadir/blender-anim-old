@@ -299,6 +299,6 @@ class BringDown(InterpolateBetweenTransformations):
 
 class BringUP(InterpolateBetweenTransformations):
     def __init__(self, source, amout=3):
-        loc1 = -OUT*amout
+        loc1 = -OUT*amount
         loc2 = 0*loc1
         super().__init__(source, loc1, loc2)
