@@ -81,7 +81,7 @@ class Scene:
         self.add_bpy_object(sphere)
         # default color for debuggin
         color_bpy_object(sphere, BABY_PINK)
-        return VGroup(sphere)
+        return VGroup(sphere=sphere)
 
     def add_z_function_surface(self, exp_f="x**2 + y**2", name="Surf"):
         surf = basic_geometry.make_z_function_surface(exp_f, name,)
