@@ -271,7 +271,7 @@ class InterpolateBetweenTransformations(Animation):
         self.sources = source if isinstance(source, VGroup) else [source]
         self.auxilary_objects = []
         self.loc1 = loc1 if loc1 else self.sources[0].location
-        self.loc2 = loc2 if loc2 else self.sources[0].location
+        self.loc2 = loc2 if loc2 else Vector(self.sources[0].location)
 
         self.rot1 = rot1 if rot1 else self.sources[0].rotation_euler
         self.rot2 = rot2 if rot2 else self.sources[0].rotation_euler
