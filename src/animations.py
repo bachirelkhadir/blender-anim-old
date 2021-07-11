@@ -268,7 +268,7 @@ class AnimateShapeKey(Animation):
 class InterpolateBetweenTransformations(Animation):
 
     def __init__(self, source, loc1=None, loc2=None, rot1=None, rot2=None):
-        self.sources = source.get_children() if isinstance(source, VGroup) else [source]
+        self.sources = source if isinstance(source, VGroup) else [source]
         self.auxilary_objects = []
         self.loc1 = loc1 if loc1 else self.sources[0].location
         self.loc2 = loc2 if loc2 else self.sources[0].location
