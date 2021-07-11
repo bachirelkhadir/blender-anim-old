@@ -133,7 +133,14 @@ class Scene:
 
     def get_copy_of_asset(self, name):
         ob = bpy.data.objects[name]
-        return self.duplicate_object(ob)
+        copy = self.duplicate_object(ob)
+
+        if len(copy.data.materials) > 0:
+            mat_name, mat = ob.data.materials.items()[0]
+            color = mat.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value
+            # match workbench color to cycles
+            copy.data.materials.values()[0].diffuse_color = color
+        return copy
 
 
     def play(self, animation, duration=1, start_frame=None):
