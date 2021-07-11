@@ -270,11 +270,11 @@ class InterpolateBetweenTransformations(Animation):
     def __init__(self, source, loc1=None, loc2=None, rot1=None, rot2=None):
         self.sources = source if isinstance(source, VGroup) else [source]
         self.auxilary_objects = []
-        self.loc1 = loc1 if loc1 else self.sources[0].location
+        self.loc1 = loc1 if loc1 else Vector(self.sources[0].location)
         self.loc2 = loc2 if loc2 else Vector(self.sources[0].location)
 
-        self.rot1 = rot1 if rot1 else self.sources[0].rotation_euler
-        self.rot2 = rot2 if rot2 else self.sources[0].rotation_euler
+        self.rot1 = rot1 if rot1 else Vector(self.sources[0].rotation_euler)
+        self.rot2 = rot2 if rot2 else Vector(self.sources[0].rotation_euler)
         print("loc2:", self.loc2, self.sources[0])
 
     def register_animation_on_blender_timeline(self, start_frame, end_frame):
