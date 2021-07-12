@@ -143,7 +143,7 @@ class Scene:
                 copy.data.materials.values()[0].diffuse_color = color
             except KeyError:
                 logging.info(f"warning, object {name} has material but doesn't have BSDF")
-                continue
+
         return copy
 
 
