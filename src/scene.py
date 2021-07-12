@@ -162,7 +162,7 @@ class Scene:
 
         bpy.context.scene.render.resolution_x = self.resolution[0]
         bpy.context.scene.render.resolution_y = self.resolution[1]
-        bpy.data.scenes["Scene"].render.resolution_percentage
+        bpy.data.scenes["Scene"].render.resolution_percentage = 100
 
         if start < 0:
             start = 0
