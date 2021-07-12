@@ -137,9 +137,13 @@ class Scene:
 
         if len(copy.data.materials) > 0:
             mat_name, mat = ob.data.materials.items()[0]
-            color = mat.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value
-            # match workbench color to cycles
-            copy.data.materials.values()[0].diffuse_color = color
+            try:
+                color = mat.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value
+                # match workbench color to cycles
+                copy.data.materials.values()[0].diffuse_color = color
+            except KeyError:
+                logging.info(f"warning, object {name} has material but doesn't have BSDF")
+                continue
         return copy
 
 
