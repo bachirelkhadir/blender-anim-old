@@ -73,7 +73,7 @@ def tex_to_dvi(tex_file):
             raise Exception(
                 ("Latex error converting to dvi. " if not consts.TEX_USE_CTEX
                 else "Xelatex error converting to xdv. ") +
-                "See log output above or the log file:\n %s\n" % log_file +
+                "See log output above or the log file:\n%s\n" % log_file +
                 "or tex file:\n File \"%s\", line 1" % tex_file)
     return result
 
