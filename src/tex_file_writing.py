@@ -130,6 +130,9 @@ def tex_to_bpy(expression, tex_collection, font, template_tex_file_body=None,):
     Converts a tex to blender object
     """
     log.info(f"Tex -> Bpy ({expression})")
+    if font is not None:
+        log.info(f"Using font {font}")
+        expression  = f"{\fontspec{%s}%s}" % (font, expression)
     if template_tex_file_body == None:
         template_tex_file_body = open(consts.TEMPLATE_TEX_FILE).read()
 
