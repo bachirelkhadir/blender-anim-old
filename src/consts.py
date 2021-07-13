@@ -32,7 +32,7 @@ ASSETS_DIR = os.path.join(CURRENT_PATH, "assets/")
 OUTPUTS_DIR = os.path.join(CURRENT_PATH, "outputs/")
 TEMPLATE_TEX_FILE = os.path.join(
     ASSETS_DIR,
-    "tex_template.tex"
+    ("c" if TEX_USE_CTEX else "") + "tex_template.tex"
 )
 
 EXTRA_PATHS = CONFIG.get("EXTRA_PATHS", [""])
