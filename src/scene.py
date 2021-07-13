@@ -33,9 +33,10 @@ class Scene:
 
     # Add basic shapes to the scene
 
-    def add_text(self, expression):
+    def add_text(self, expression, font=None):
         text = tex2bpy.tex_to_bpy(expression,
-                                  self.collections["Latex"])
+                                  self.collections["Latex"],
+                                  font)
         self.play(animations.Disappear(text), start_frame=0)
         return text
 
