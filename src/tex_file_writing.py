@@ -125,7 +125,7 @@ def dvi_to_svg(dvi_file, regen_if_exists=False):
 
 
 
-def tex_to_bpy(expression, tex_collection, template_tex_file_body=None):
+def tex_to_bpy(expression, tex_collection, font, template_tex_file_body=None,):
     """
     Converts a tex to blender object
     """
