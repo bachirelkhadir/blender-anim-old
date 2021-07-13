@@ -253,7 +253,8 @@ class Scene:
         if bpy.data.filepath == "":
             logging.warning("Warning, no blend file specified. I will use the default blender startup file (and remove the cube).")
             objs = bpy.data.objects
-            objs.remove(objs["Cube"], do_unlink=True)
+            if "Cube" in objs:
+                objs.remove(objs["Cube"], do_unlink=True)
             #utils.remove_bpy_collection(existing_collections["Collection"])
 
 
