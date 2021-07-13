@@ -17,7 +17,7 @@ import src.tex_file_writing as tex2bpy
 
 CURRENT_PATH = utils.get_current_path()
 
-TEX_USE_CTEX = False
+TEX_USE_CTEX = True
 TEX_TEXT_TO_REPLACE = "YourTextHere"
 
 # DEFAULT values
