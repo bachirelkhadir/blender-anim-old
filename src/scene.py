@@ -312,8 +312,9 @@ class Scene:
     def construct(self):
         raise NotImplementedError
 
-    def add(self, ob):
-        self.play(animations.Appear(ob))
+    def add(self, *obs):
+        for ob in obs:
+            self.play(animations.Appear(ob))
 
     def remove(self, *obs):
         for ob in obs:
