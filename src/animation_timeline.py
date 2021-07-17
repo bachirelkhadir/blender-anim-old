@@ -24,7 +24,7 @@ class AnimationTimeline:
     def wait(self, duration):
         self._current_frame += self._duration_to_number_frames(duration)
         print("-------")
-        print(*locals())
+        print(locals())
         return self._current_frame
 
     def play_animation(self, animation, duration, start_frame=None):
