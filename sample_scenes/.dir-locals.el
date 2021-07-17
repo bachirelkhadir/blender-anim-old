@@ -2,6 +2,7 @@
 ;;; For more information see (info "(emacs) Directory Variables")
 
 ((python-mode . ((eval . (setq lsp-python-ms-extra-paths ["/snap/blender/161/2.93/scripts/modules/"]))
+                 (eval . (blender-mode 1))
                  (eval . (message  "Blender Local dir variables executed for python mode."))))
 
  (nil  . ((pyvenv-workon . "manim")
