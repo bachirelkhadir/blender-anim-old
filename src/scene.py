@@ -163,6 +163,8 @@ class Scene:
         self.last_frame = max(self.last_frame, end_frame)
 
     def render(self, start=-1, end=-1, filename="render/render-frame", physics=False):
+
+        print("end:", end)
         if start >= end:
             logging.info(f"start >= end ({start} >= {end}), I will not render anything.")
             return
@@ -174,7 +176,6 @@ class Scene:
         bpy.context.scene.render.resolution_y = self.resolution[1]
         bpy.data.scenes["Scene"].render.resolution_percentage = 100
 
-        print("end:", end)
         if start < 0:
             start = 0
         if end < 0:
