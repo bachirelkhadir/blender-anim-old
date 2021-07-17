@@ -3,3 +3,4 @@ outputs/*blend
 assets/*blend1
 */__pycache__
 *log
+viewer
