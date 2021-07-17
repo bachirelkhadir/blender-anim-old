@@ -43,12 +43,12 @@ def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
     save_blend_file(os.path.join(destination, f"{class_name}.blend"))
     scene.print_animation_outline()
 
+    print("end:",scene.last_frame)
     if start is None:
         start = 1
     if  end is None:
         end = scene.last_frame+1
 
-    print("end:", end)
     log.info(f"Start @ frame {start} and end @ {end}")
 
     if cmd_args.render_pngs:
