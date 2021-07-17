@@ -142,6 +142,8 @@ class Scene:
                 color = mat.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value
                 # match workbench color to cycles
                 copy.data.materials.values()[0].diffuse_color = color
+
+                logging.info(f"coloring object {name} in workbench with its BSDF color {color}")
             except KeyError:
                 logging.info(f"warning, object {name} has material but doesn't have BSDF")
 
