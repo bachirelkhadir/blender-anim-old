@@ -24,7 +24,7 @@ class HelloWorldScene(Scene):
         lab = self.add_text(s)
         lab.rotation_euler =  bpy.data.objects["Camera"].rotation_euler
         lab.scale = (1,1,1)
-        lab.location[0] = 3
+        lab.location[0] = 0
         utils.bpy_apply_transform(lab, location=False, rotation=False, scale=True)
         #color_bpy_object(lab, BABY_YELLOW)
         return lab
