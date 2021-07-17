@@ -143,7 +143,7 @@ class Scene:
                 # match workbench color to cycles
                 copy.data.materials.values()[0].diffuse_color = color
 
-                logging.info(f"coloring object {name} in workbench with its BSDF color {color}")
+                logging.info(f"coloring object {name} in workbench with its BSDF color {Vector(color)}")
             except KeyError:
                 logging.info(f"warning, object {name} has material but doesn't have BSDF")
 
