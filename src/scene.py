@@ -179,6 +179,7 @@ class Scene:
         if end < 0:
             end = self.last_frame
 
+        print("end:", end)
         logging.info(f"engine: {self.engine}  @ {self.resolution} @ {self.fps} frames/s")
         # redirect output to log file
         logfile = 'blender_render.log'
@@ -188,7 +189,6 @@ class Scene:
         os.close(1)
         os.open(logfile, os.O_WRONLY)
 
-        print("end:", end)
         bpy.context.scene.render.engine = self.engine
         bpy.context.scene.frame_start = start
         bpy.context.scene.frame_end = end
