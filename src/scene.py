@@ -160,10 +160,7 @@ class Scene:
 
     def wait(self, duration=1):
         end_frame = self.timeline.wait(duration)
-
-        print("duration:", end_frame)
         self.last_frame = max(self.last_frame, end_frame)
-        print("last_frame:", self.last_frame)
 
     def render(self, start=-1, end=-1, filename="render/render-frame", physics=False):
 
