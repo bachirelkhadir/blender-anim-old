@@ -56,7 +56,7 @@ ENGINE =  CONFIG.get("ENGINE", 'BLENDER_EEVEE') # 'CYCLES'
 #ENGINE =  "CYCLES"
 FPS = CONFIG.get("FPS", 60)
 RESOLUTION = CONFIG.get("RESOLUTION", (1920, 1080))
-LOGGING_LEVEL = 40 # 20 for  logging.info, 40 for debug
+LOGGING_LEVEL = 20 # 20 for  logging.info, 40 for debug
 
 for path_dir in (ASSETS_DIR, TEX_DIR, OUTPUTS_DIR):
     utils.create_folder_if_needed(path_dir)
