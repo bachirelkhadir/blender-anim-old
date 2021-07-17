@@ -145,7 +145,7 @@ class Scene:
 
                 logging.info(f"coloring object {name} in workbench with its BSDF color {Vector(color)}")
             except KeyError:
-                logging.info(f"warning, object {name} has material but doesn't have BSDF")
+                logging.info(f"warning, object {name} has material but doesn't have  'Principled BSDF' node")
 
         return copy
 
