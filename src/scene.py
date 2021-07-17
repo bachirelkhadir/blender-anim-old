@@ -132,11 +132,11 @@ class Scene:
         self.collections["Creation"].objects.link(copy)
         return copy
 
-    def get_copy_of_asset(self, name):
+    def get_copy_of_asset(self, name, color_for_workbench=False):
         ob = bpy.data.objects[name]
         copy = self.duplicate_object(ob)
 
-        if len(copy.data.materials) > 0:
+        if color_for_workbench and len(copy.data.materials) > 0:
             mat_name, mat = ob.data.materials.items()[0]
             try:
                 color = mat.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value
