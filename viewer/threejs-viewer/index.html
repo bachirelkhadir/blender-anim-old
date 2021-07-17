@@ -22,6 +22,17 @@
       scene.add( cube );
 
       camera.position.z = 5;
+
+
+var clock = new THREE.Clock();
+
+// model
+      gltfLoader = new THREE.GLTFLoader()
+      gltfLoader.load( "/home/bachir/Downloads/upbge/monkyemove.glb", function ( model ) {
+          mixer= new THREE.AnimationMixer(model.scene);
+          model.animations.forEach((clip) => {mixer.clipAction(clip).play(); });
+          scene.add(model.scene)})
+
       function animate() {
           requestAnimationFrame( animate );
           renderer.render( scene, camera );
