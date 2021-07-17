@@ -26,7 +26,7 @@ class HelloWorldScene(Scene):
         lab.scale = (1,1,1)
         lab.location[0] = 3
         utils.bpy_apply_transform(lab, location=False, rotation=False, scale=True)
-        color_bpy_object(lab, BABY_YELLOW)
+        #color_bpy_object(lab, BABY_YELLOW)
         return lab
 
 save_and_render(HelloWorldScene, 1, 100, engine="BLENDER_WORKBENCH")
