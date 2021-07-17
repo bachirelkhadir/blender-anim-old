@@ -164,7 +164,6 @@ class Scene:
 
     def render(self, start=-1, end=-1, filename="render/render-frame", physics=False):
 
-        print("end:", end)
         if start >= end:
             logging.info(f"start >= end ({start} >= {end}), I will not render anything.")
             return
