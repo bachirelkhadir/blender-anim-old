@@ -190,6 +190,7 @@ class Scene:
 
         bpy.context.scene.render.engine = self.engine
         bpy.context.scene.frame_start = start
+        print("end:", end)
         bpy.context.scene.frame_end = end
         # TODO: do we need this variable?
         self.rendered_imgs_filepaths = []
