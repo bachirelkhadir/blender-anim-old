@@ -174,12 +174,12 @@ class Scene:
         bpy.context.scene.render.resolution_y = self.resolution[1]
         bpy.data.scenes["Scene"].render.resolution_percentage = 100
 
+        print("end:", end)
         if start < 0:
             start = 0
         if end < 0:
             end = self.last_frame
 
-        print("end:", end)
         logging.info(f"engine: {self.engine}  @ {self.resolution} @ {self.fps} frames/s")
         # redirect output to log file
         logfile = 'blender_render.log'
