@@ -149,6 +149,9 @@ class Scene:
 
         return copy
 
+    def get_asset(self, name):
+        return bpy.data.objects[name]
+
 
     def play(self, animation, duration=1, start_frame=None):
         end_frame = self.timeline.play_animation(animation, duration,
