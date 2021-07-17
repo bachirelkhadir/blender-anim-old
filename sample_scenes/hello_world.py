@@ -30,4 +30,4 @@ class HelloWorldScene(Scene):
         color_bpy_object(lab, BABY_YELLOW)
         return lab
 
-save_and_render(HelloWorldScene, 1, 100, engine="BLENDER_EEVEE")
+save_and_render(HelloWorldScene, 1, 100, engine="BLENDER_WORKBENCH")
