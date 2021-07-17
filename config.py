@@ -9,7 +9,7 @@ CONFIG = {
     'BLENDER_BIN': "blender",
     'XDG_OPEN': "open", # "xdg-open"
     'ENGINE': 'BLENDER_EEVEE',
-    'FPS': '60',
+    'FPS': 60,
     'Resolution': (1920, 1080),
     #'ENGINE': 'BLENDER_WORKBENCH',
     #'ENGINE': 'CYCLES'
