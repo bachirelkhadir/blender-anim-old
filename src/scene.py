@@ -195,7 +195,7 @@ class Scene:
         self.rendered_imgs_filepaths = []
 
         def get_filename(frame_number):
-            return f"{filename}-{frame_number:02}.png"
+            return f"{filename}-{frame_number:04}.png"
 
         log.info(f"Rendering to {get_filename(0)}")
 
