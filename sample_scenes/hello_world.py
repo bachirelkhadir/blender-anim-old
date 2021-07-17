@@ -12,7 +12,6 @@ class HelloWorldScene(Scene):
         lab = self.add_text_facing_camera("$f(x) = 0$")
         cube = self.add_cube()
         surf = self.add_z_function_surface("x**2+y**2")
-        #color_bpy_object(surf, BABY_BLUE)
         self.print_scene_outline()
         self.play(Appear(lab))
         self.play(Appear(cube))
