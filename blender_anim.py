@@ -52,6 +52,8 @@ def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
     if cmd_args.render_pngs:
         logging.info("-"*50)
         logging.info("Rendering")
+
+        print("end:", end)
         scene.render(start, end, filename=os.path.join(destination,
                                                        "images",
                                                        class_name,
