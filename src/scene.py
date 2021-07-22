@@ -18,10 +18,11 @@ from src.color_list import *
 log = logging.getLogger(__name__)
 
 class Scene:
-    def __init__(self, fps=None, engine=None, resolution=None, transparent=True):
+    def __init__(self, fps=None, engine=None, resolution=None, transparent=True, resolution_percentage=100):
         self.fps = fps or FPS
         self.engine = engine or ENGINE
         self.resolution = resolution or RESOLUTION
+        self.resolution_percentage = resolution_percentage
 
         self.last_frame = 0
         self._setup_blender_collections()
@@ -173,7 +174,7 @@ class Scene:
 
         bpy.context.scene.render.resolution_x = self.resolution[0]
         bpy.context.scene.render.resolution_y = self.resolution[1]
-        bpy.data.scenes["Scene"].render.resolution_percentage = 100
+        bpy.data.scenes["Scene"].render.resolution_percentage = self.resolution_percentage
 
         if start < 0:
             start = 0
