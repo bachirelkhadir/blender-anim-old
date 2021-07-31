@@ -23,7 +23,7 @@ class Scene:
         self.engine = engine or ENGINE
         self.resolution = resolution or RESOLUTION
         self.resolution_percentage = resolution_percentage
-        self.sampels = samples
+        self.samples = samples
 
         self.last_frame = 0
         self._setup_blender_collections()
