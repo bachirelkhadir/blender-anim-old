@@ -48,6 +48,10 @@ def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
     if  end is None:
         end = scene.last_frame+1
 
+    # XXX
+    start = 1
+    end = 1
+
     log.info(f"Start @ frame {start} and end @ {end}")
 
     if cmd_args.render_pngs:
