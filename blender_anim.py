@@ -46,7 +46,8 @@ def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
     log.info(f"Saving render blend file to {destination}")
     utils.create_folder_if_needed(destination)
 
-    bpy.data.scenes["Scene"].render.filepath = destination_render save_blend_file(os.path.join(destination, f"{class_name}.blend"))
+    bpy.data.scenes["Scene"].render.filepath = destination_render
+    save_blend_file(os.path.join(destination, f"{class_name}.blend"))
     scene.print_animation_outline()
 
     # XXXXX
