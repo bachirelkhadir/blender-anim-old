@@ -43,12 +43,7 @@ def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
                                       class_name,
                                       )
 
-    log.info(f"Saving render blend file to {destination}")
-    utils.create_folder_if_needed(destination)
 
-    bpy.data.scenes["Scene"].render.filepath = destination_render
-    save_blend_file(os.path.join(destination, f"{class_name}.blend"))
-    scene.print_animation_outline()
 
     # XXXXX
     return
@@ -57,6 +52,13 @@ def save_and_render(class_scene, start=None, end=None, **scene_kwargs):
     if  end is None:
         end = scene.last_frame+1
 
+    bpy.data.scenes["Scene"].render.filepath = destination_render
+    bpy.data.scenes["Scene"].frame_end = end
+
+    log.info(f"Saving render blend file to {destination}")
+    utils.create_folder_if_needed(destination)
+    save_blend_file(os.path.join(destination, f"{class_name}.blend"))
+    scene.print_animation_outline()
 
     log.info(f"Start @ frame {start} and end @ {end}")
 
