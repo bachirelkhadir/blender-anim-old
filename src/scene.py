@@ -178,7 +178,6 @@ class Scene:
         if self.samples:
             bpy.data.scenes["Scene"].cycles.samples = self.samples
         bpy.data.scenes["Scene"].render.resolution_percentage = self.resolution_percentage
-        bpy.data.scenes["Scene"].render.filepath = "//"
 
         if start < 0:
             start = 0
